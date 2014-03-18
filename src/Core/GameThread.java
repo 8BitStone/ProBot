@@ -3,7 +3,7 @@ package Core;
 
 public class GameThread extends Thread{
 	
-	private long tic = 10; //ms
+	private long tic = 50; //ms
 	private long lastUpdateAt = System.currentTimeMillis() % 1000;
 	private ProBotGame game;
 
@@ -24,5 +24,4 @@ public class GameThread extends Thread{
 			}
 		}
 	}
-
 }

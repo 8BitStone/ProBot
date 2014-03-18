@@ -12,6 +12,7 @@ import java.net.URL;
 import javax.imageio.ImageIO;
 
 import static Core.ProBotGame.BLOCK_SIZE;
+import static Components.Living.POSITION_MULTIPLYER;
 
 
 public class World {
@@ -84,24 +85,17 @@ public class World {
 	}
 	
 	public void paint(Graphics g, Dimension windowDimension, Point playerPoint){
-		/*int xOnG = 1;
-		for(int xRead = (int)Math.floor(playerPoint.getX()-windowDimension.width/2); xRead <= (int)Math.floor(playerPoint.getX()+windowDimension.width/2); xRead++){
-			int yOnG = 1;
-			for(int yRead = (int)Math.floor(playerPoint.getY()-windowDimension.height/2); yRead <= (int)Math.floor(playerPoint.getY()+windowDimension.height/2); yRead++){
-				blocks[xRead][yRead].paint(g, xOnG, yOnG);
-System.out.println(xRead+"x"+yRead);
-System.out.println(xOnG+"x"+yOnG);
-				yOnG++;
-			}
-			xOnG++;
-		}*/
-		int worldWindowOffsetX = (int)Math.floor((playerPoint.x-windowDimension.width/BLOCK_SIZE/2));
-		int worldWindowOffsetY = (int)Math.floor((playerPoint.y-windowDimension.height/BLOCK_SIZE/2));
+		int worldWindowOffsetX = (int)Math.floor((playerPoint.x/POSITION_MULTIPLYER-windowDimension.width/BLOCK_SIZE/2));
+		int worldWindowOffsetY = (int)Math.floor((playerPoint.y/POSITION_MULTIPLYER-windowDimension.height/BLOCK_SIZE/2));
 		int x = 1;
 		while(x*BLOCK_SIZE <= windowDimension.width){
 			int y = 1;
 			while(y*BLOCK_SIZE <= windowDimension.height){
-				blocks[x+worldWindowOffsetX][y+worldWindowOffsetY].paint(g, x*BLOCK_SIZE - BLOCK_SIZE +1, y*BLOCK_SIZE - BLOCK_SIZE +1);
+				blocks[x+worldWindowOffsetX][y+worldWindowOffsetY].paint(
+						g, 
+						x*BLOCK_SIZE - BLOCK_SIZE - playerPoint.x%POSITION_MULTIPLYER, 
+						y*BLOCK_SIZE - BLOCK_SIZE - playerPoint.y%POSITION_MULTIPLYER
+				);
 				y++;
 			}
 			x++;

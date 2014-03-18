@@ -1,6 +1,6 @@
 package Components;
 
-public class Upgrade {
+public abstract class Upgrade {
 	
 	private UpgradeType type;
 	private String name;

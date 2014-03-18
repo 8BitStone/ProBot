@@ -9,6 +9,7 @@ import java.awt.event.KeyListener;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
+import Components.Player;
 import Components.Robot;
 import Components.World;
 
@@ -17,10 +18,11 @@ public class ProBotGame extends JFrame implements KeyListener{
 	
 	public static final int BLOCK_SIZE = 10;
 	
-	private Robot player;
+	private Player player;
 	private GameThread gameThread;
 	private JPanel panel = new JPanel();
 	private Dimension windowSize;
+	private Graphics g;
 	public boolean running = true;
 
 	public static void main(String[] args) {
@@ -43,13 +45,13 @@ public class ProBotGame extends JFrame implements KeyListener{
 		
 		addKeyListener(this);
 		
-		this.player = new Robot(
+		this.player = new Player(
 				new Point(0, 0), 
 				100, 
 				100, 
 				100, 
 				100, 
-				new World("World1"),
+				new World("World2"),
 				"Player",
 				Color.GREEN,
 				100
@@ -67,8 +69,8 @@ public class ProBotGame extends JFrame implements KeyListener{
 		(
 				new Point
 				(
-						(int)Math.floor(this.player.getCurrentWorld().getWidth()/2), 
-						(int)Math.floor(this.player.getCurrentWorld().getHeight()/2)
+						(int)Math.floor(this.player.getCurrentWorld().getWidth()/2*10), 
+						(int)Math.floor(this.player.getCurrentWorld().getHeight()/2*10)
 				)
 		);
 		System.out.println("repainting");
@@ -79,6 +81,7 @@ public class ProBotGame extends JFrame implements KeyListener{
 	}
 	
 	public void renew(){
+		player.move();
 		this.repaint();
 	}
 	
@@ -94,25 +97,40 @@ public class ProBotGame extends JFrame implements KeyListener{
 	        case KeyEvent.VK_P:
 	            this.running = !this.running;
 	            break;
-	        case KeyEvent.VK_D:
-	            player.move('d');
-	            break;
 	        case KeyEvent.VK_SPACE:
 	        case KeyEvent.VK_W:
-	        	player.move('w');
+	            player.setMovingUp(true);
 	            break;
-	        case KeyEvent.VK_A:
-	        	player.move('a');
+	        case KeyEvent.VK_D:
+	            player.setMovingRight(true);
 	            break;
 	        case KeyEvent.VK_S:
-	        	player.move('s');
+	            player.setMovingDown(true);
+	            break;
+	        case KeyEvent.VK_A:
+	            player.setMovingLeft(true);
 	            break;
 		}
-
 	}
 
 	@Override
-	public void keyReleased(KeyEvent e) {}
+	public void keyReleased(KeyEvent e) {
+		switch (e.getKeyCode()) {
+	        case KeyEvent.VK_SPACE:
+	        case KeyEvent.VK_W:
+	            player.setMovingUp(false);
+	            break;
+	        case KeyEvent.VK_D:
+	            player.setMovingRight(false);
+	            break;
+	        case KeyEvent.VK_S:
+	            player.setMovingDown(false);
+	            break;
+	        case KeyEvent.VK_A:
+	            player.setMovingLeft(false);
+	            break;
+		}
+	}
 
 	@Override
 	public void keyTyped(KeyEvent e) {}

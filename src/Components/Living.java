@@ -5,7 +5,9 @@ import java.awt.Point;
 
 public abstract class Living {
 	
-	private Point position;
+	public static final int POSITION_MULTIPLYER = 10;
+	
+	private Point position; //should be 10x bigger (POSITION_MULTIPLYER) than the world
 	private int baseSpeed;
 	private int baseForce;
 	private int healt;
@@ -14,6 +16,10 @@ public abstract class Living {
 	private double ySpeed;
 	private double xSpeed;
 	private boolean isFloating;
+	private boolean isMovingUp = false;
+	private boolean isMovingRight = false;
+	private boolean isMovingDown = false;
+	private boolean isMovingLeft = false;
 	
 	public Living(Point position, int baseSpeed, int baseForce, int healt,
 			int maxHealt, World currentWorld) {
@@ -26,6 +32,38 @@ public abstract class Living {
 		this.ySpeed = 0;
 		this.xSpeed = 0;
 		this.isFloating = false;
+	}
+	
+	public boolean isMovingUp() {
+		return isMovingUp;
+	}
+
+	public void setMovingUp(boolean isMovingUp) {
+		this.isMovingUp = isMovingUp;
+	}
+
+	public boolean isMovingRight() {
+		return isMovingRight;
+	}
+
+	public void setMovingRight(boolean isMovingRight) {
+		this.isMovingRight = isMovingRight;
+	}
+
+	public boolean isMovingDown() {
+		return isMovingDown;
+	}
+
+	public void setMovingDown(boolean isMovingDown) {
+		this.isMovingDown = isMovingDown;
+	}
+
+	public boolean isMovingLeft() {
+		return isMovingLeft;
+	}
+
+	public void setMovingLeft(boolean isMovingLeft) {
+		this.isMovingLeft = isMovingLeft;
 	}
 
 	public Point getPosition() {
@@ -68,20 +106,16 @@ public abstract class Living {
 		return baseForce;
 	}
 	
-	public void move(char direction){
-		switch(direction){
-			case 'w':
-				this.position.y--;
-				break;
-			case 's':
-				this.position.y++;
-				break;
-			case 'd':
-				this.position.x++;
-				break;
-			case 'a':
-				this.position.x--;
-				break;
+	public void move(){
+		if(isMovingUp && !isMovingDown){
+			position.y--;
+		}else if(isMovingDown && !isMovingUp){
+			position.y++;
+		}
+		if(isMovingRight && !isMovingLeft){
+			position.x++;
+		}else if(isMovingLeft && !isMovingRight){
+			position.x--;
 		}
 	}
 	
