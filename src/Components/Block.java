@@ -5,17 +5,28 @@ import java.awt.Graphics;
 
 import static Core.ProBotGame.BLOCK_SIZE;
 
-public class Block {
+public abstract class Block implements Cloneable {
 	
 	private Color color;
+	protected boolean isSolid;
 	
-	public Block(Color color) {
+	public Block(Color color, boolean isSolid) {
 		this.color = color;
+		this.isSolid = isSolid;
 	}
 	
 	public void paint(Graphics g, int x, int y){
 		g.setColor(this.color);
 		g.fillRect(x, y, BLOCK_SIZE, BLOCK_SIZE);
+	}
+	
+	public Block clone(){  
+	    try{  
+	        return (Block) super.clone();
+	    }catch(Exception e){ 
+	    	e.printStackTrace();
+	    	return null;
+	    }
 	}
 
 }

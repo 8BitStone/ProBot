@@ -35,7 +35,7 @@ public class ProBotGame extends JFrame implements KeyListener{
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setResizable(false);
 		setLocation(100, 100);
-		setBackground(Color.red);
+		setBackground(Color.white);
 		windowSize = new Dimension(800, 800);
 		panel.setBackground(Color.white);
 		panel.setSize(windowSize);
@@ -51,7 +51,7 @@ public class ProBotGame extends JFrame implements KeyListener{
 				100, 
 				100, 
 				100, 
-				new World("World2"),
+				new World("World1"),
 				"Player",
 				Color.GREEN,
 				100

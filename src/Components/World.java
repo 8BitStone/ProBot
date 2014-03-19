@@ -4,10 +4,13 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Point;
+import java.awt.Window.Type;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.imageio.ImageIO;
 
@@ -22,9 +25,13 @@ public class World {
 	private int height = 0;
 	private double G = 9.81;
 	private Block[][] blocks;
+	
+	private static Map<Color, Block> blockTypes = new HashMap<Color, Block>();
 
 	public World(String name) {
 		this.name = name;
+		blockTypes.put(new Color(255, 255, 255), new Blocks.Air());
+		blockTypes.put(new Color(94, 75, 9), new Blocks.Dirt());
 	}
 
 	public String getName() {
@@ -75,7 +82,17 @@ public class World {
 		this.blocks = new Block[width][height];
 		for(int x = 0; x < this.width; x++){
 			for(int y = 0; y < this.height; y++){
-				this.blocks[x][y] = new Block(new Color(worldImg.getRGB(x, y)));
+				Block b = blockTypes.get(new Color(worldImg.getRGB(x, y)));
+				if(null != b){
+					this.blocks[x][y] = b.clone();
+				}else{
+					this.blocks[x][y] = new Blocks.Air();
+					System.out.print(new Color(worldImg.getRGB(x, y)).getRed());
+					System.out.print(", ");
+					System.out.print(new Color(worldImg.getRGB(x, y)).getGreen());
+					System.out.print(", ");
+					System.out.println(new Color(worldImg.getRGB(x, y)).getBlue());
+				}
 			}
 		}
 	}
