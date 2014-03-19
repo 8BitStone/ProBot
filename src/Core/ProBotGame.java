@@ -24,6 +24,7 @@ public class ProBotGame extends JFrame implements KeyListener{
 	private Dimension windowSize;
 	private Graphics g;
 	public boolean running = true;
+	private long lastLoopTime = System.currentTimeMillis();
 
 	public static void main(String[] args) {
 		new ProBotGame().load();
@@ -57,7 +58,7 @@ public class ProBotGame extends JFrame implements KeyListener{
 				100
 		);
 		
-		gameThread = new GameThread(this, 10);
+		gameThread = new GameThread(this, 50);
 	}
 
 
@@ -81,6 +82,7 @@ public class ProBotGame extends JFrame implements KeyListener{
 	}
 	
 	public void renew(){
+		long deltaTime = System.currentTimeMillis() - lastLoopTime;
 		player.move();
 		this.repaint();
 	}

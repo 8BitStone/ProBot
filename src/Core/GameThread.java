@@ -4,7 +4,7 @@ package Core;
 public class GameThread extends Thread{
 	
 	private long tic = 50; //ms
-	private long lastUpdateAt = System.currentTimeMillis() % 1000;
+	private long lastUpdateAt = System.currentTimeMillis() / 1000;
 	private ProBotGame game;
 
 	public GameThread(ProBotGame game, long tic) {
@@ -17,7 +17,7 @@ public class GameThread extends Thread{
 			if(!game.running){
 				continue;
 			}
-			long tempDate = System.currentTimeMillis() % 1000;
+			long tempDate = System.currentTimeMillis() / 1000;
 			if((lastUpdateAt + tic) >= tempDate){
 				lastUpdateAt = tempDate;
 				game.renew();
