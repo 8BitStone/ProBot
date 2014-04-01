@@ -6,8 +6,11 @@ import java.awt.Point;
 public abstract class Living {
 	
 	public static final int POSITION_MULTIPLYER = 10;
+	public static final int BLOCKS_PER_SECOND = 15;
 	
 	private Point position; //should be 10x bigger (POSITION_MULTIPLYER) than the world
+	private float exactPostitionX;
+	private float exactPostitionY;
 	private int baseSpeed;
 	private int baseForce;
 	private int healt;
@@ -24,6 +27,8 @@ public abstract class Living {
 	public Living(Point position, int baseSpeed, int baseForce, int healt,
 			int maxHealt, World currentWorld) {
 		this.position = position;
+		this.exactPostitionX = position.x;
+		this.exactPostitionY = position.y;
 		this.baseSpeed = baseSpeed;
 		this.baseForce = baseForce;
 		this.healt = healt;
@@ -72,6 +77,8 @@ public abstract class Living {
 
 	public void setPosition(Point position) {
 		this.position = position;
+		this.exactPostitionX = position.x;
+		this.exactPostitionY = position.y;
 	}
 
 	public int getHealt() {
@@ -106,17 +113,20 @@ public abstract class Living {
 		return baseForce;
 	}
 	
-	public void move(){
+	public void move(long deltaTime){
+		float distance = (float)BLOCKS_PER_SECOND*POSITION_MULTIPLYER/1000*deltaTime;
 		if(isMovingUp && !isMovingDown){
-			position.y--;
+			exactPostitionY-=distance;
 		}else if(isMovingDown && !isMovingUp){
-			position.y++;
+			exactPostitionY+=distance;
 		}
 		if(isMovingRight && !isMovingLeft){
-			position.x++;
+			exactPostitionX+=distance;
 		}else if(isMovingLeft && !isMovingRight){
-			position.x--;
+			exactPostitionX-=distance;
 		}
+		position.x = Math.round(exactPostitionX);
+		position.y = Math.round(exactPostitionY);
 	}
 	
 	public void die(){
