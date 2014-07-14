@@ -127,17 +127,69 @@ public abstract class Living {
 	public void move(long deltaTime){
 		float distance = (float)BLOCKS_PER_SECOND/deltaTime*POSITION_MULTIPLYER;
 		if(isMovingUp && !isMovingDown){
-			exactPostitionY-=distance;
+			exactPostitionY -= checkForColision(distance, DIRECTION_UP);
 		}else if(isMovingDown && !isMovingUp){
-			exactPostitionY+=distance;
+			exactPostitionY += checkForColision(distance, DIRECTION_DOWN);
 		}
+		
 		if(isMovingRight && !isMovingLeft){
-			exactPostitionX+=distance;
+			exactPostitionX += checkForColision(distance, DIRECTION_RIGHT);
 		}else if(isMovingLeft && !isMovingRight){
-			exactPostitionX-=distance;
+			exactPostitionX -= checkForColision(distance, DIRECTION_LEFT);
 		}
 		//position.x = Math.round(exactPostitionX);
 		//position.y = Math.round(exactPostitionY);
+	}
+	
+	private float checkForColision(float distance, char direction){
+		Point position = this.getPosition();
+		float maxDistanceToColision = 0;
+		Block[][] blocks = null;
+		switch (direction) {
+			case DIRECTION_UP:
+				blocks = this.getCurrentWorld().getBlocks(
+						position.x, 
+						position.y-((int)Math.ceil(distance)), 
+						position.x, 
+						position.y
+						);
+				break;
+			case DIRECTION_RIGHT:
+				blocks = this.getCurrentWorld().getBlocks(
+						position.x, 
+						position.y, 
+						position.x+((int)Math.ceil(distance)), 
+						position.y
+						);
+				break;
+			case DIRECTION_DOWN:
+				blocks = this.getCurrentWorld().getBlocks(
+						position.x, 
+						position.y, 
+						position.x, 
+						position.y+((int)Math.ceil(distance))
+						);
+				break;
+			case DIRECTION_LEFT:
+				blocks = this.getCurrentWorld().getBlocks(
+						position.x-((int)Math.ceil(distance)), 
+						position.y, 
+						position.x, 
+						position.y
+						);
+				break;
+		}
+		
+		for(Block[] r : blocks){
+			for(Block b : r){
+				if(b.isSolid){
+					System.out.println("solid");
+					return maxDistanceToColision;
+				}
+				maxDistanceToColision += 1;
+			}			
+		}
+		return distance;
 	}
 	
 	public void die(){
