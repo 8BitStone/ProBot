@@ -6,9 +6,14 @@ import java.awt.Point;
 public abstract class Living {
 	
 	public static final int POSITION_MULTIPLYER = 10;
-	public static final int BLOCKS_PER_SECOND = 15;
+	public static final int BLOCKS_PER_SECOND = 1;
 	
-	private Point position; //should be 10x bigger (POSITION_MULTIPLYER) than the world
+	public static final char DIRECTION_UP = 'u';
+	public static final char DIRECTION_RIGHT = 'r';
+	public static final char DIRECTION_DOWN = 'd';
+	public static final char DIRECTION_LEFT = 'l';
+	
+	//private Point position; //should be 10x bigger (POSITION_MULTIPLYER) than the world
 	private float exactPostitionX;
 	private float exactPostitionY;
 	private int baseSpeed;
@@ -26,7 +31,7 @@ public abstract class Living {
 	
 	public Living(Point position, int baseSpeed, int baseForce, int healt,
 			int maxHealt, World currentWorld) {
-		this.position = position;
+		//this.position = position;
 		this.exactPostitionX = position.x;
 		this.exactPostitionY = position.y;
 		this.baseSpeed = baseSpeed;
@@ -45,6 +50,7 @@ public abstract class Living {
 
 	public void setMovingUp(boolean isMovingUp) {
 		this.isMovingUp = isMovingUp;
+		this.isMovingDown = isMovingUp ? !isMovingUp : this.isMovingDown;
 	}
 
 	public boolean isMovingRight() {
@@ -53,6 +59,7 @@ public abstract class Living {
 
 	public void setMovingRight(boolean isMovingRight) {
 		this.isMovingRight = isMovingRight;
+		this.isMovingLeft = isMovingRight ? !isMovingRight : this.isMovingLeft;
 	}
 
 	public boolean isMovingDown() {
@@ -61,6 +68,7 @@ public abstract class Living {
 
 	public void setMovingDown(boolean isMovingDown) {
 		this.isMovingDown = isMovingDown;
+		this.isMovingUp = isMovingDown ? !isMovingDown : this.isMovingUp;
 	}
 
 	public boolean isMovingLeft() {
@@ -69,14 +77,17 @@ public abstract class Living {
 
 	public void setMovingLeft(boolean isMovingLeft) {
 		this.isMovingLeft = isMovingLeft;
+		this.isMovingRight = isMovingLeft ? !isMovingLeft : this.isMovingRight;
 	}
 
 	public Point getPosition() {
-		return position;
+		return new Point(
+				Math.round(exactPostitionX),
+				Math.round(exactPostitionY)
+				);
 	}
 
 	public void setPosition(Point position) {
-		this.position = position;
 		this.exactPostitionX = position.x;
 		this.exactPostitionY = position.y;
 	}
@@ -114,7 +125,7 @@ public abstract class Living {
 	}
 	
 	public void move(long deltaTime){
-		float distance = (float)BLOCKS_PER_SECOND*POSITION_MULTIPLYER/1000*deltaTime;
+		float distance = (float)BLOCKS_PER_SECOND/deltaTime*POSITION_MULTIPLYER;
 		if(isMovingUp && !isMovingDown){
 			exactPostitionY-=distance;
 		}else if(isMovingDown && !isMovingUp){
@@ -125,8 +136,8 @@ public abstract class Living {
 		}else if(isMovingLeft && !isMovingRight){
 			exactPostitionX-=distance;
 		}
-		position.x = Math.round(exactPostitionX);
-		position.y = Math.round(exactPostitionY);
+		//position.x = Math.round(exactPostitionX);
+		//position.y = Math.round(exactPostitionY);
 	}
 	
 	public void die(){
@@ -134,7 +145,12 @@ public abstract class Living {
 	}
 	
 	public void paint(Graphics g){
-		this.paint(g, position);
+		this.paint(g,
+				new Point(
+						Math.round(exactPostitionX),
+						Math.round(exactPostitionY)
+						)
+		);
 	};
 	
 	public abstract void paint(Graphics g, Point position);

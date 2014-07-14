@@ -25,10 +25,6 @@ public class ProBotGame extends JFrame implements KeyListener{
 	private Graphics g;
 	public boolean running = true;
 	private long lastLoopTime = System.currentTimeMillis();
-
-	public static void main(String[] args) {
-		new ProBotGame().load();
-	}
 	
 	public ProBotGame() {
 		//For JFrame
@@ -65,7 +61,7 @@ public class ProBotGame extends JFrame implements KeyListener{
 	public void load(){
 		System.out.println("loading world");
 		this.player.getCurrentWorld().load();
-		System.out.println("complete");
+		System.out.println("set Player position");
 		this.player.setPosition
 		(
 				new Point
@@ -76,7 +72,6 @@ public class ProBotGame extends JFrame implements KeyListener{
 		);
 		System.out.println("repainting");
 		this.repaint();
-		System.out.println("complete");
 		System.out.println("starting thread");
 		gameThread.run();
 	}
