@@ -6,7 +6,7 @@ import java.awt.Point;
 public abstract class Living {
 	
 	public static final int POSITION_MULTIPLYER = 10;
-	public static final int BLOCKS_PER_SECOND = 1;
+	public static final int BLOCKS_PER_SECOND = 1; 
 	
 	public static final char DIRECTION_UP = 'u';
 	public static final char DIRECTION_RIGHT = 'r';
@@ -125,7 +125,7 @@ public abstract class Living {
 	}
 	
 	public void move(long deltaTime){
-		float distance = (float)BLOCKS_PER_SECOND/deltaTime*POSITION_MULTIPLYER;
+		float distance = ((float)deltaTime/1000)/BLOCKS_PER_SECOND*POSITION_MULTIPLYER; //not sure with this line
 		if(isMovingUp && !isMovingDown){
 			exactPostitionY -= checkForColision(distance, DIRECTION_UP);
 		}else if(isMovingDown && !isMovingUp){
@@ -143,7 +143,6 @@ public abstract class Living {
 	
 	private float checkForColision(float distance, char direction){
 		Point position = this.getPosition();
-		float maxDistanceToColision = 0;
 		Block[][] blocks = null;
 		switch (direction) {
 			case DIRECTION_UP:
@@ -180,10 +179,11 @@ public abstract class Living {
 				break;
 		}
 		
+		float maxDistanceToColision = 0;
+		
 		for(Block[] r : blocks){
 			for(Block b : r){
 				if(b.isSolid){
-					System.out.println("solid");
 					return maxDistanceToColision;
 				}
 				maxDistanceToColision += 1;

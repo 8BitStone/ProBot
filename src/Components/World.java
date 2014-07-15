@@ -123,7 +123,7 @@ public class World {
 		Block[][] blocks = new Block[x2-x1+1][y2-y1+1];
 		for(int x = x1; x <= x2; x++){
 			for(int y = y1; y <= y2; y++){
-				blocks[x-x1][y-y1] = this.blocks[x/POSITION_MULTIPLYER+1][y/POSITION_MULTIPLYER+1];
+				blocks[x-x1][y-y1] = this.blocks[x/POSITION_MULTIPLYER+1][y/POSITION_MULTIPLYER+1]; //fucking no idea why there must be a +1 but otherwise it takes the wrong block
 			}
 		}
 		return blocks;
