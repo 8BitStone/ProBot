@@ -48,7 +48,7 @@ public class ProBotGame extends JFrame implements KeyListener{
 				100, 
 				100, 
 				100, 
-				new World("World1"),
+				new World("world3"),
 				"Player",
 				Color.GREEN,
 				100
@@ -67,7 +67,7 @@ public class ProBotGame extends JFrame implements KeyListener{
 				new Point
 				(
 						(int)Math.floor(this.player.getCurrentWorld().getWidth()/2*10), 
-						(int)Math.floor(this.player.getCurrentWorld().getHeight()/2*10)
+						(int)Math.floor(this.player.getCurrentWorld().getHeight()/2*10-60)
 				)
 		);
 		System.out.println("repainting");

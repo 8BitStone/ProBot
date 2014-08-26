@@ -6,7 +6,7 @@ import java.awt.Point;
 public abstract class Living {
 	
 	public static final int POSITION_MULTIPLYER = 10;
-	public static final int BLOCKS_PER_SECOND = 1; 
+	public static final int BLOCKS_PER_SECOND = 10; 
 	
 	public static final char DIRECTION_UP = 'u';
 	public static final char DIRECTION_RIGHT = 'r';
@@ -23,6 +23,8 @@ public abstract class Living {
 	private World currentWorld;
 	private double ySpeed;
 	private double xSpeed;
+	private int charWidth = 1;
+	private int charHeight = 1;
 	private boolean isFloating;
 	private boolean isMovingUp = false;
 	private boolean isMovingRight = false;
@@ -125,7 +127,7 @@ public abstract class Living {
 	}
 	
 	public void move(long deltaTime){
-		float distance = ((float)deltaTime/1000)/BLOCKS_PER_SECOND*POSITION_MULTIPLYER; //not sure with this line
+		float distance = ((float)deltaTime/1000)*BLOCKS_PER_SECOND*POSITION_MULTIPLYER; //not sure with this line
 		if(isMovingUp && !isMovingDown){
 			exactPostitionY -= checkForColision(distance, DIRECTION_UP);
 		}else if(isMovingDown && !isMovingUp){
@@ -155,18 +157,18 @@ public abstract class Living {
 				break;
 			case DIRECTION_RIGHT:
 				blocks = this.getCurrentWorld().getBlocks(
-						position.x, 
+						position.x+charWidth*POSITION_MULTIPLYER, 
 						position.y, 
-						position.x+((int)Math.ceil(distance)), 
+						position.x+charWidth*POSITION_MULTIPLYER+((int)Math.ceil(distance)), 
 						position.y
 						);
 				break;
 			case DIRECTION_DOWN:
 				blocks = this.getCurrentWorld().getBlocks(
 						position.x, 
-						position.y, 
+						position.y+charHeight*POSITION_MULTIPLYER, 
 						position.x, 
-						position.y+((int)Math.ceil(distance))
+						position.y+charHeight*POSITION_MULTIPLYER+((int)Math.ceil(distance))
 						);
 				break;
 			case DIRECTION_LEFT:
