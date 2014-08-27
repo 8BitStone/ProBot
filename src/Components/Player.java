@@ -1,8 +1,8 @@
 package Components;
 
 import java.awt.Color;
+import java.awt.Graphics;
 import java.awt.Point;
-import java.awt.event.KeyEvent;
 
 public class Player extends Robot {
 
@@ -12,6 +12,23 @@ public class Player extends Robot {
 		super(position, baseSpeed, baseForce, healt, maxhealth, currentWorld,
 				name, color, energy);
 		// TODO Auto-generated constructor stub
+	}
+	
+	public void load(){
+		this.setPosition
+		(
+				new Point
+				(
+						(int)Math.floor(this.getCurrentWorld().getWidth()/2*POSITION_MULTIPLYER), 
+						(int)Math.floor(this.getCurrentWorld().getHeight()/2*POSITION_MULTIPLYER-60)
+				)
+		);
+	}
+	
+	@Override
+	public void paint(Graphics g, Point position) {
+		g.setColor(this.getColor());
+		g.fillRect(position.x, position.y, 10, 10);
 	}
 	
 }

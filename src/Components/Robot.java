@@ -5,8 +5,6 @@ import java.awt.Graphics;
 import java.awt.Point;
 import java.util.ArrayList;
 
-import static Core.ProBotGame.BLOCK_SIZE;
-
 public class Robot extends Living{
 	
 	private String name;
@@ -67,8 +65,7 @@ public class Robot extends Living{
 
 	@Override
 	public void paint(Graphics g, Point position) {
-		g.setColor(color);
-		g.fillRect(position.x, position.y, 10, 10);
+		
 	}
 
 }

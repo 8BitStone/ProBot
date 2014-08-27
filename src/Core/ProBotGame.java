@@ -10,10 +10,10 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 import Components.Player;
-import Components.Robot;
 import Components.World;
 
 
+@SuppressWarnings("serial")
 public class ProBotGame extends JFrame implements KeyListener{
 	
 	public static final int BLOCK_SIZE = 10;
@@ -22,7 +22,6 @@ public class ProBotGame extends JFrame implements KeyListener{
 	private GameThread gameThread;
 	private JPanel panel = new JPanel();
 	private Dimension windowSize;
-	private Graphics g;
 	public boolean running = true;
 	private long lastLoopTime = System.currentTimeMillis();
 	
@@ -61,15 +60,8 @@ public class ProBotGame extends JFrame implements KeyListener{
 	public void load(){
 		System.out.println("loading world");
 		this.player.getCurrentWorld().load();
-		System.out.println("set Player position");
-		this.player.setPosition
-		(
-				new Point
-				(
-						(int)Math.floor(this.player.getCurrentWorld().getWidth()/2*10), 
-						(int)Math.floor(this.player.getCurrentWorld().getHeight()/2*10-60)
-				)
-		);
+		System.out.println("loading player");
+		this.player.load();
 		System.out.println("repainting");
 		this.repaint();
 		System.out.println("starting thread");
