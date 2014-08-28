@@ -213,6 +213,10 @@ public abstract class Living {
 		for(Block[] r : blocks){
 			for(Block b : r){
 				if(b.isSolid){
+					if(isMovingUp && ySpeed > 0){
+						ySpeed = 0;
+						this.setMovingDown(true);
+					}
 					return maxDistanceToColision;
 				}
 				maxDistanceToColision += 1;
