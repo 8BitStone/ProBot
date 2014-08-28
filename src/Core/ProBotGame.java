@@ -43,8 +43,8 @@ public class ProBotGame extends JFrame implements KeyListener{
 		
 		this.player = new Player(
 				new Point(0, 0), 
-				100, 
-				100, 
+				30, 
+				50, 
 				100, 
 				100, 
 				new World("world3"),

@@ -6,7 +6,7 @@ import java.awt.Point;
 public abstract class Living {
 	
 	public static final int POSITION_MULTIPLYER = 10;
-	public static final int BLOCKS_PER_SECOND = 10; 
+	public static final int BLOCKS_PER_SECOND = 1; 
 	
 	public static final char DIRECTION_UP = 'u';
 	public static final char DIRECTION_RIGHT = 'r';
@@ -21,8 +21,8 @@ public abstract class Living {
 	private int healt;
 	private int maxHealth;
 	private World currentWorld;
-	private double ySpeed;
-	private double xSpeed;
+	private float ySpeed; // percentage of max speed
+	private float xSpeed; //percent of max speed
 	private int charWidth = 1;
 	private int charHeight = 1;
 	private boolean isFloating;
@@ -37,7 +37,7 @@ public abstract class Living {
 		this.exactPostitionX = position.x;
 		this.exactPostitionY = position.y;
 		this.baseSpeed = baseSpeed;
-		this.baseForce = baseForce;
+		this.baseForce = baseForce; // 100% = 
 		this.healt = healt;
 		this.maxHealth = maxHealt;
 		this.currentWorld = currentWorld;
@@ -62,6 +62,7 @@ public abstract class Living {
 	public void setMovingRight(boolean isMovingRight) {
 		this.isMovingRight = isMovingRight;
 		this.isMovingLeft = isMovingRight ? !isMovingRight : this.isMovingLeft;
+		this.xSpeed = !isMovingRight ? 0 : this.xSpeed;
 	}
 
 	public boolean isMovingDown() {
@@ -80,6 +81,7 @@ public abstract class Living {
 	public void setMovingLeft(boolean isMovingLeft) {
 		this.isMovingLeft = isMovingLeft;
 		this.isMovingRight = isMovingLeft ? !isMovingLeft : this.isMovingRight;
+		this.xSpeed = !isMovingLeft ? 0 : this.xSpeed;
 	}
 
 	public Point getPosition() {
@@ -127,20 +129,31 @@ public abstract class Living {
 	}
 	
 	public void move(long deltaTime){
-		float distance = ((float)deltaTime/1000)*BLOCKS_PER_SECOND*POSITION_MULTIPLYER; //not sure with this line
-		if(isMovingUp && !isMovingDown){
-			exactPostitionY -= checkForColision(distance, DIRECTION_UP);
-		}else if(isMovingDown && !isMovingUp){
-			exactPostitionY += checkForColision(distance, DIRECTION_DOWN);
+		
+		float distance;
+		
+		if(isMovingUp || isMovingDown){
+			distance = ((float)deltaTime/1000)*BLOCKS_PER_SECOND*POSITION_MULTIPLYER*baseForce;
+			
+			if(isMovingUp && !isMovingDown){
+				exactPostitionY -= checkForColision(distance, DIRECTION_UP);
+			}else if(isMovingDown && !isMovingUp){
+				exactPostitionY += checkForColision(distance, DIRECTION_DOWN);
+			}
+			
 		}
 		
-		if(isMovingRight && !isMovingLeft){
-			exactPostitionX += checkForColision(distance, DIRECTION_RIGHT);
-		}else if(isMovingLeft && !isMovingRight){
-			exactPostitionX -= checkForColision(distance, DIRECTION_LEFT);
+		if(isMovingRight || isMovingLeft){
+			xSpeed += (float)(baseForce)/10*deltaTime/1000;
+			xSpeed = xSpeed >= 1 ? 1 : xSpeed;
+			distance = ((float)deltaTime/1000)*BLOCKS_PER_SECOND*POSITION_MULTIPLYER*baseSpeed*xSpeed;
+			
+			if(isMovingRight && !isMovingLeft){
+				exactPostitionX += checkForColision(distance, DIRECTION_RIGHT);
+			}else if(isMovingLeft && !isMovingRight){
+				exactPostitionX -= checkForColision(distance, DIRECTION_LEFT);
+			}
 		}
-		//position.x = Math.round(exactPostitionX);
-		//position.y = Math.round(exactPostitionY);
 	}
 	
 	private float checkForColision(float distance, char direction){
