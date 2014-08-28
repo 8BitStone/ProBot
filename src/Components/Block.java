@@ -7,7 +7,7 @@ import static Core.ProBotGame.BLOCK_SIZE;
 
 public abstract class Block implements Cloneable {
 	
-	private Color color;
+	public Color color; //just for debugging public
 	protected boolean isSolid;
 	
 	public Block(Color color, boolean isSolid) {

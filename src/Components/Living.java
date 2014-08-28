@@ -1,7 +1,10 @@
 package Components;
 
+import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Point;
+
+import javax.swing.text.html.HTMLDocument.Iterator;
 
 public abstract class Living {
 	
@@ -23,8 +26,8 @@ public abstract class Living {
 	private World currentWorld;
 	private float ySpeed; // percentage of max speed
 	private float xSpeed; //percent of max speed
-	private int charWidth = 1;
-	private int charHeight = 1;
+	private int charWidth = 1; // in Blocks
+	private int charHeight = 1; // in Blocks
 	private boolean isFloating;
 	private boolean isMovingUp = false;
 	private boolean isMovingRight = false;
@@ -132,7 +135,9 @@ public abstract class Living {
 		
 		float distance;
 		
-		if(isMovingUp || isMovingDown){
+		this.checkForFloating();
+		
+		if(isMovingUp || isMovingDown || isFloating){
 			distance = ((float)deltaTime/1000)*BLOCKS_PER_SECOND*POSITION_MULTIPLYER*baseForce;
 			
 			if(isMovingUp && !isMovingDown){
@@ -205,6 +210,12 @@ public abstract class Living {
 			}			
 		}
 		return distance;
+	}
+	
+	private void checkForFloating(){
+		Point position = this.getPosition();
+		Block[][] block = this.currentWorld.getBlocks(position.x, position.y+charHeight*POSITION_MULTIPLYER, position.x, position.y+charHeight*POSITION_MULTIPLYER);
+		this.isFloating = !block[0][0].isSolid;
 	}
 	
 	public void die(){
