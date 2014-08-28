@@ -40,7 +40,7 @@ public abstract class Living {
 		this.exactPostitionX = position.x;
 		this.exactPostitionY = position.y;
 		this.baseSpeed = baseSpeed;
-		this.baseForce = baseForce; // 100% = 
+		this.baseForce = baseForce; // 100%
 		this.healt = healt;
 		this.maxHealth = maxHealt;
 		this.currentWorld = currentWorld;
@@ -132,24 +132,28 @@ public abstract class Living {
 	}
 	
 	public void move(long deltaTime){
-		
 		float distance;
 		
 		this.checkForFloating();
 		
 		if(isMovingUp || isMovingDown || isFloating){
-			distance = ((float)deltaTime/1000)*BLOCKS_PER_SECOND*POSITION_MULTIPLYER*baseForce;
-			
-			if(isMovingUp && !isMovingDown){
+			ySpeed = (float) (!isFloating 
+					? 1 //moving up a ladder for ex.
+					: (ySpeed == 0 && isMovingUp? 1 : ySpeed) - (float)this.currentWorld.getG()/10*(deltaTime)/1000)
+				;
+			distance = ((float)deltaTime/1000)*BLOCKS_PER_SECOND*POSITION_MULTIPLYER*baseForce*ySpeed;
+			if(ySpeed > 0){
 				exactPostitionY -= checkForColision(distance, DIRECTION_UP);
-			}else if(isMovingDown && !isMovingUp){
-				exactPostitionY += checkForColision(distance, DIRECTION_DOWN);
+			}else{
+				exactPostitionY += checkForColision(distance*(-1), DIRECTION_DOWN);
 			}
-			
+		}else{
+			//reset if not floating
+			ySpeed = 0;
 		}
 		
 		if(isMovingRight || isMovingLeft){
-			xSpeed += (float)(baseForce)/10*deltaTime/1000;
+			xSpeed += baseForce/10*(float)deltaTime/1000;
 			xSpeed = xSpeed >= 1 ? 1 : xSpeed;
 			distance = ((float)deltaTime/1000)*BLOCKS_PER_SECOND*POSITION_MULTIPLYER*baseSpeed*xSpeed;
 			
