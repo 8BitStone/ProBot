@@ -10,6 +10,7 @@ public abstract class Living {
 	
 	public static final int POSITION_MULTIPLYER = 10;
 	public static final int BLOCKS_PER_SECOND = 1; 
+	public static final int MOVEMENT_MULTIPLYER = 10;
 	
 	public static final char DIRECTION_UP = 'u';
 	public static final char DIRECTION_RIGHT = 'r';
@@ -137,14 +138,18 @@ public abstract class Living {
 		this.checkForFloating();
 		
 		if(isMovingUp || isMovingDown || isFloating){
-			ySpeed = (float) (!isFloating 
-					? 1 //moving up a ladder for ex.
-					: (ySpeed == 0 && isMovingUp? 1 : ySpeed) - (float)this.currentWorld.getG()/10*(deltaTime)/1000)
-				;
-			distance = ((float)deltaTime/1000)*BLOCKS_PER_SECOND*POSITION_MULTIPLYER*baseForce*ySpeed;
+			ySpeed = (float)(
+					ySpeed == 0 && isMovingUp 
+						? baseForce/MOVEMENT_MULTIPLYER 
+						: (isMovingUp || ySpeed < 0)
+							? ySpeed - (float)this.currentWorld.getG()*(deltaTime)/1000 
+							: ySpeed - (float)this.currentWorld.getG()*(deltaTime)/1000*2
+					);
 			if(ySpeed > 0){
+				distance = ((float)deltaTime/1000)*BLOCKS_PER_SECOND*POSITION_MULTIPLYER*ySpeed*(float)this.currentWorld.getG();
 				exactPostitionY -= checkForColision(distance, DIRECTION_UP);
 			}else{
+				distance = ((float)deltaTime/1000)*BLOCKS_PER_SECOND*POSITION_MULTIPLYER*ySpeed*(float)this.currentWorld.getG();
 				exactPostitionY += checkForColision(distance*(-1), DIRECTION_DOWN);
 			}
 		}else{
@@ -153,7 +158,7 @@ public abstract class Living {
 		}
 		
 		if(isMovingRight || isMovingLeft){
-			xSpeed += baseForce/10*(float)deltaTime/1000;
+			xSpeed += baseForce/MOVEMENT_MULTIPLYER*(float)deltaTime/1000;
 			xSpeed = xSpeed >= 1 ? 1 : xSpeed;
 			distance = ((float)deltaTime/1000)*BLOCKS_PER_SECOND*POSITION_MULTIPLYER*baseSpeed*xSpeed;
 			
