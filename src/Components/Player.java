@@ -28,7 +28,7 @@ public class Player extends Robot {
 	@Override
 	public void paint(Graphics g, Point position) {
 		g.setColor(this.getColor());
-		g.fillRect(position.x, position.y, 10, 10);
+		g.fillRect(position.x, position.y, this.charHeight*POSITION_MULTIPLYER, this.charWidth*POSITION_MULTIPLYER);
 	}
 	
 }

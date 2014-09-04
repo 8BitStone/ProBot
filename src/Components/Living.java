@@ -27,8 +27,8 @@ public abstract class Living {
 	private World currentWorld;
 	private float ySpeed; // percentage of max speed
 	private float xSpeed; //percent of max speed
-	private int charWidth = 1; // in Blocks
-	private int charHeight = 1; // in Blocks
+	protected int charWidth = 2; // in Blocks
+	protected int charHeight = 2; // in Blocks
 	private boolean isFloating;
 	private boolean isMovingUp = false;
 	private boolean isMovingRight = false;
@@ -135,11 +135,9 @@ public abstract class Living {
 	public void move(long deltaTime){
 		float distance;
 		
-		this.checkForFloating();
-		
 		if(isMovingUp || isMovingDown || isFloating){
 			ySpeed = (float)(
-					ySpeed == 0 && isMovingUp 
+					ySpeed == 0 && isMovingUp && !isFloating
 						? baseForce/MOVEMENT_MULTIPLYER 
 						: (isMovingUp || ySpeed < 0)
 							? ySpeed - (float)this.currentWorld.getG()*(deltaTime)/1000 
@@ -149,6 +147,7 @@ public abstract class Living {
 				distance = ((float)deltaTime/1000)*BLOCKS_PER_SECOND*POSITION_MULTIPLYER*ySpeed*(float)this.currentWorld.getG();
 				exactPostitionY -= checkForColision(distance, DIRECTION_UP);
 			}else{
+				setMovingDown(true);
 				distance = ((float)deltaTime/1000)*BLOCKS_PER_SECOND*POSITION_MULTIPLYER*ySpeed*(float)this.currentWorld.getG();
 				exactPostitionY += checkForColision(distance*(-1), DIRECTION_DOWN);
 			}
@@ -168,6 +167,7 @@ public abstract class Living {
 				exactPostitionX -= checkForColision(distance, DIRECTION_LEFT);
 			}
 		}
+		this.checkForFloating();
 	}
 	
 	private float checkForColision(float distance, char direction){
@@ -187,15 +187,15 @@ public abstract class Living {
 						position.x+charWidth*POSITION_MULTIPLYER, 
 						position.y, 
 						position.x+charWidth*POSITION_MULTIPLYER+((int)Math.ceil(distance)), 
-						position.y
+						position.y+charHeight*POSITION_MULTIPLYER-1 // -1 prevents from taking a block too much
 						);
 				break;
 			case DIRECTION_DOWN:
 				blocks = this.getCurrentWorld().getBlocks(
 						position.x, 
 						position.y+charHeight*POSITION_MULTIPLYER, 
-						position.x, 
-						position.y+charHeight*POSITION_MULTIPLYER+((int)Math.ceil(distance))
+						position.x+charWidth*POSITION_MULTIPLYER-1, 
+						position.y+charHeight*POSITION_MULTIPLYER+((int)Math.ceil(distance))-1
 						);
 				break;
 			case DIRECTION_LEFT:
@@ -203,32 +203,79 @@ public abstract class Living {
 						position.x-((int)Math.ceil(distance)), 
 						position.y, 
 						position.x, 
-						position.y
+						position.y+charHeight*POSITION_MULTIPLYER-1 // -1 prevents from taking a block too much
 						);
 				break;
 		}
 		
 		float maxDistanceToColision = 0;
 		
-		for(Block[] r : blocks){
-			for(Block b : r){
-				if(b.isSolid){
-					if(isMovingUp && ySpeed > 0){
-						ySpeed = 0;
-						this.setMovingDown(true);
+		switch (direction) {
+			case DIRECTION_UP:
+				for(int x = 0; x < blocks.length ; x++){
+					for(int y = blocks[0].length-1; y >= 0; y--){
+						if(blocks[x][y].isSolid){
+							if(ySpeed > 0){
+								ySpeed = 0;
+								this.setMovingDown(true);
+							}
+							return maxDistanceToColision;
+						}
 					}
-					return maxDistanceToColision;
+					maxDistanceToColision += 1;
 				}
-				maxDistanceToColision += 1;
-			}			
+				break;
+			case DIRECTION_LEFT:
+				for(int x = blocks.length-1; x >= 0; x--){
+					for(int y = 0; y < blocks[x].length ; y++){
+						if(blocks[x][y].isSolid){
+							return maxDistanceToColision-1;
+						}
+					}
+					maxDistanceToColision += 1;
+				}
+				break;
+			case DIRECTION_RIGHT:
+				for(Block[] r : blocks){
+					for(Block b : r){
+						if(b.isSolid){
+							return maxDistanceToColision;
+						}
+					}	
+					maxDistanceToColision += 1;
+				}
+				break;
+			case DIRECTION_DOWN:
+				for(Block[] r : blocks){
+					for(Block b : r){
+						if(b.isSolid){
+							ySpeed = 0;
+							setMovingDown(false);
+							System.out.println("bla");
+							System.out.println(distance);
+							System.out.println(maxDistanceToColision);
+							return maxDistanceToColision;
+						}
+					}
+					maxDistanceToColision += 1;
+				}
 		}
 		return distance;
 	}
 	
 	private void checkForFloating(){
 		Point position = this.getPosition();
-		Block[][] block = this.currentWorld.getBlocks(position.x, position.y+charHeight*POSITION_MULTIPLYER, position.x, position.y+charHeight*POSITION_MULTIPLYER);
-		this.isFloating = !block[0][0].isSolid;
+		Block[][] blocks = this.currentWorld.getBlocks(position.x, position.y+charHeight*POSITION_MULTIPLYER, position.x+charWidth*POSITION_MULTIPLYER-1, position.y+charHeight*POSITION_MULTIPLYER);
+		for(Block[] r : blocks){
+			for(Block b : r){
+				if(b.isSolid){
+					setMovingDown(false);
+					this.isFloating = false;
+					return;
+				}
+			}
+		}
+		this.isFloating = true;
 	}
 	
 	public void die(){
