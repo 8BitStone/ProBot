@@ -144,11 +144,11 @@ public abstract class Living {
 							: ySpeed - (float)this.currentWorld.getG()*(deltaTime)/1000*2
 					);
 			if(ySpeed > 0){
-				distance = ((float)deltaTime/1000)*BLOCKS_PER_SECOND*POSITION_MULTIPLYER*ySpeed*(float)this.currentWorld.getG();
+				distance = ((float)deltaTime/1000)*BLOCKS_PER_SECOND*ySpeed*(float)this.currentWorld.getG();
 				exactPostitionY -= checkForColision(distance, DIRECTION_UP);
 			}else{
 				setMovingDown(true);
-				distance = ((float)deltaTime/1000)*BLOCKS_PER_SECOND*POSITION_MULTIPLYER*ySpeed*(float)this.currentWorld.getG();
+				distance = ((float)deltaTime/1000)*BLOCKS_PER_SECOND*ySpeed*(float)this.currentWorld.getG();
 				exactPostitionY += checkForColision(distance*(-1), DIRECTION_DOWN);
 			}
 		}else{
@@ -159,7 +159,7 @@ public abstract class Living {
 		if(isMovingRight || isMovingLeft){
 			xSpeed += baseForce/MOVEMENT_MULTIPLYER*(float)deltaTime/1000;
 			xSpeed = xSpeed >= 1 ? 1 : xSpeed;
-			distance = ((float)deltaTime/1000)*BLOCKS_PER_SECOND*POSITION_MULTIPLYER*baseSpeed*xSpeed;
+			distance = ((float)deltaTime/1000)*BLOCKS_PER_SECOND*baseSpeed*xSpeed;
 			
 			if(isMovingRight && !isMovingLeft){
 				exactPostitionX += checkForColision(distance, DIRECTION_RIGHT);
@@ -177,7 +177,7 @@ public abstract class Living {
 			case DIRECTION_UP:
 				blocks = this.getCurrentWorld().getBlocks(
 						position.x, 
-						position.y-((int)Math.ceil(distance)), 
+						position.y-((int)Math.ceil(distance*POSITION_MULTIPLYER)), 
 						position.x, 
 						position.y
 						);
@@ -186,7 +186,7 @@ public abstract class Living {
 				blocks = this.getCurrentWorld().getBlocks(
 						position.x+charWidth*POSITION_MULTIPLYER, 
 						position.y, 
-						position.x+charWidth*POSITION_MULTIPLYER+((int)Math.ceil(distance)), 
+						position.x+charWidth*POSITION_MULTIPLYER+((int)Math.ceil(distance*POSITION_MULTIPLYER)), 
 						position.y+charHeight*POSITION_MULTIPLYER-1 // -1 prevents from taking a block too much
 						);
 				break;
@@ -195,12 +195,12 @@ public abstract class Living {
 						position.x, 
 						position.y+charHeight*POSITION_MULTIPLYER, 
 						position.x+charWidth*POSITION_MULTIPLYER-1, 
-						position.y+charHeight*POSITION_MULTIPLYER+((int)Math.ceil(distance))
+						position.y+charHeight*POSITION_MULTIPLYER+((int)Math.ceil(distance*POSITION_MULTIPLYER))
 						);
 				break;
 			case DIRECTION_LEFT:
 				blocks = this.getCurrentWorld().getBlocks(
-						position.x-((int)Math.ceil(distance)), 
+						position.x-((int)Math.ceil(distance*POSITION_MULTIPLYER)), 
 						position.y, 
 						position.x, 
 						position.y+charHeight*POSITION_MULTIPLYER-1 // -1 prevents from taking a block too much
@@ -263,7 +263,7 @@ public abstract class Living {
 					maxDistanceToColision = 0;
 				}
 		}
-		return tempMaxDistance != 0 ? tempMaxDistance : distance;
+		return tempMaxDistance != 0 ? tempMaxDistance : distance*POSITION_MULTIPLYER;
 	}
 	
 	private void checkForFloating(){
