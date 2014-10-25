@@ -1,7 +1,13 @@
+import javax.swing.SwingUtilities;
+
 public class ProBotGame{
 	
 	public static void main(String[] args) {
-		new Core.ProBotGame().load();
+		SwingUtilities.invokeLater(new Runnable() {
+			public void run() {
+				new Core.ProBotGame();
+			}
+		});
 	}
 
 }

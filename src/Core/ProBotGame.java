@@ -1,4 +1,5 @@
 package Core;
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
@@ -18,10 +19,9 @@ public class ProBotGame extends JFrame implements KeyListener{
 	
 	public static final int BLOCK_SIZE = 10;
 	
-	private Player player;
-	private GameThread gameThread;
+	protected Player player;
 	private JPanel panel = new JPanel();
-	private Dimension windowSize;
+	protected Dimension windowSize;
 	public boolean running = true;
 	private long lastLoopTime = System.currentTimeMillis();
 	
@@ -30,16 +30,22 @@ public class ProBotGame extends JFrame implements KeyListener{
 		super("ProBot");
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setResizable(false);
-		setLocation(100, 100);
-		setBackground(Color.white);
+		
+		this.load();
+		
+		GameCanvas canvas = new GameCanvas(this);
+		add(canvas, BorderLayout.CENTER);
 		windowSize = new Dimension(800, 800);
-		panel.setBackground(Color.white);
-		panel.setSize(windowSize);
-		getContentPane().add(panel);
-		setSize(panel.getSize());
-		setVisible(true);
+		setSize(windowSize);
+		setVisible(true); 
+		canvas.createBufferStrategy(2);
 		
 		addKeyListener(this);
+		
+	}
+
+
+	public void load(){
 		
 		this.player = new Player(
 				new Point(0, 0), 
@@ -53,32 +59,16 @@ public class ProBotGame extends JFrame implements KeyListener{
 				100
 		);
 		
-		gameThread = new GameThread(this);
-	}
-
-
-	public void load(){
 		System.out.println("loading world");
 		this.player.getCurrentWorld().load();
 		System.out.println("loading player");
 		this.player.load();
-		System.out.println("repainting");
-		this.repaint();
-		System.out.println("starting thread");
-		gameThread.run();
 	}
 	
 	public void renew(){
 		long deltaTime = System.currentTimeMillis() - lastLoopTime;
 		this.lastLoopTime = System.currentTimeMillis();
 		player.move(deltaTime);
-		this.repaint();
-	}
-	
-	public void repaint(){
-		Graphics g = panel.getGraphics();
-		player.getCurrentWorld().paint(g, windowSize, player.getPosition());
-		player.paint(g, new Point(windowSize.width/2, windowSize.height/2));
 	}
 
 	@Override
