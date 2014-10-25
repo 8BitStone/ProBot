@@ -195,7 +195,7 @@ public abstract class Living {
 						position.x, 
 						position.y+charHeight*POSITION_MULTIPLYER, 
 						position.x+charWidth*POSITION_MULTIPLYER-1, 
-						position.y+charHeight*POSITION_MULTIPLYER+((int)Math.ceil(distance))-1
+						position.y+charHeight*POSITION_MULTIPLYER+((int)Math.ceil(distance))
 						);
 				break;
 			case DIRECTION_LEFT:
@@ -208,6 +208,7 @@ public abstract class Living {
 				break;
 		}
 		
+		float tempMaxDistance = 0;
 		float maxDistanceToColision = 0;
 		
 		switch (direction) {
@@ -221,8 +222,9 @@ public abstract class Living {
 							}
 							return maxDistanceToColision;
 						}
+						maxDistanceToColision += 1;
 					}
-					maxDistanceToColision += 1;
+					maxDistanceToColision = 0;
 				}
 				break;
 			case DIRECTION_LEFT:
@@ -251,21 +253,27 @@ public abstract class Living {
 						if(b.isSolid){
 							ySpeed = 0;
 							setMovingDown(false);
-							System.out.println("bla");
-							System.out.println(distance);
-							System.out.println(maxDistanceToColision);
-							return maxDistanceToColision;
+							//this is so awesome because if the chat is bigger than 1 it has to check every row bevore it can set the maxDistance
+							if(maxDistanceToColision < tempMaxDistance || tempMaxDistance == 0){
+								tempMaxDistance = maxDistanceToColision;
+							}
 						}
+						maxDistanceToColision += 1;
 					}
-					maxDistanceToColision += 1;
+					maxDistanceToColision = 0;
 				}
 		}
-		return distance;
+		return tempMaxDistance != 0 ? tempMaxDistance : distance;
 	}
 	
 	private void checkForFloating(){
 		Point position = this.getPosition();
-		Block[][] blocks = this.currentWorld.getBlocks(position.x, position.y+charHeight*POSITION_MULTIPLYER, position.x+charWidth*POSITION_MULTIPLYER-1, position.y+charHeight*POSITION_MULTIPLYER);
+		Block[][] blocks = this.currentWorld.getBlocks(
+				position.x, 
+				position.y+charHeight*POSITION_MULTIPLYER, 
+				position.x+charWidth*POSITION_MULTIPLYER-1, 
+				position.y+charHeight*POSITION_MULTIPLYER
+				);
 		for(Block[] r : blocks){
 			for(Block b : r){
 				if(b.isSolid){
