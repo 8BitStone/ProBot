@@ -1,10 +1,7 @@
 package Components;
 
-import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Point;
-
-import javax.swing.text.html.HTMLDocument.Iterator;
 
 public abstract class Living {
 	

@@ -2,14 +2,11 @@ package Core;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.Graphics;
 import java.awt.Point;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
 import javax.swing.JFrame;
-import javax.swing.JPanel;
-
 import Components.Player;
 import Components.World;
 
@@ -20,7 +17,6 @@ public class ProBotGame extends JFrame implements KeyListener{
 	public static final int BLOCK_SIZE = 10;
 	
 	protected Player player;
-	private JPanel panel = new JPanel();
 	protected Dimension windowSize;
 	public boolean running = true;
 	private long lastLoopTime = System.currentTimeMillis();
