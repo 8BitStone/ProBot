@@ -114,6 +114,7 @@ public class ProBotGame extends JFrame implements KeyListener, ActionListener{
 	public void keyPressed(KeyEvent e) {
 		switch (e.getKeyCode()) {
 	        case KeyEvent.VK_P:
+	        case KeyEvent.VK_ESCAPE:
 	            this.running = !this.running;
 	            if(this.running){
 	            	this.lastLoopTime = System.currentTimeMillis();
