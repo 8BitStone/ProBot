@@ -19,8 +19,8 @@ public class GameCanvas extends Canvas {
 		GameChrono chrono = new GameChrono(this, game);
 		new Timer(16, chrono).start(); // 20 fot 50MHz, 16 for 60MHz
 	}
-
-	public void gameRepaint() {
+	
+	public void inRepaint(){
 		if(repaintInProgress){
 			return;
 		}
@@ -28,6 +28,7 @@ public class GameCanvas extends Canvas {
 		
 		BufferStrategy strategy = getBufferStrategy();
 		Graphics g = strategy.getDrawGraphics();
+		
 		game.player.getCurrentWorld().paint(g, game.windowSize, game.player.getPosition());
 		game.player.paint(g, new Point(game.windowSize.width/2, game.windowSize.height/2));
 		

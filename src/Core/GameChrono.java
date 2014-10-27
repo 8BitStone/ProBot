@@ -16,7 +16,7 @@ public class GameChrono implements ActionListener{
 	public void actionPerformed(ActionEvent arg0) {
 		if(game.running){
 			game.renew();
+			gc.inRepaint();
 		}
-		gc.gameRepaint();
 	}
 }
