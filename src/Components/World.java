@@ -72,7 +72,7 @@ public class World {
 	public void load(){
 		BufferedImage worldImg = null;
 		try {
-			URL ulr = getClass().getResource("/"+name+".jpg");
+			URL ulr = getClass().getResource("/Worlds/"+name+".jpg");
 			worldImg = ImageIO.read(new File(ulr.getPath()));
 		} catch (IOException e) {}
 		

@@ -59,6 +59,7 @@ public class ProBotGame extends JFrame implements KeyListener{
 		this.player.getCurrentWorld().load();
 		System.out.println("loading player");
 		this.player.load();
+		System.out.println("running");
 	}
 	
 	public void renew(){
