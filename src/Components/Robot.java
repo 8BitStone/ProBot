@@ -16,7 +16,7 @@ public class Robot extends Living{
 
 	public Robot(Point position, int baseSpeed, int baseForce, int healt,
 			int maxhealth, World currentWorld, String name, Color color, int energy) {
-		super(position, baseSpeed, baseForce, healt, maxhealth, currentWorld);
+		super(position, baseSpeed, baseForce, healt, maxhealth, currentWorld, false);
 		this.name = name;
 		this.color = color;
 		this.energy = energy;

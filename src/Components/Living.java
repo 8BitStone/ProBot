@@ -31,9 +31,11 @@ public abstract class Living {
 	private boolean isMovingRight = false;
 	private boolean isMovingDown = false;
 	private boolean isMovingLeft = false;
+	private boolean bouncing = false;
+	private boolean bounceNextTime = false;
 	
 	public Living(Point position, int baseSpeed, int baseForce, int healt,
-			int maxHealt, World currentWorld) {
+			int maxHealt, World currentWorld, boolean bouncing) {
 		//this.position = position;
 		this.exactPostitionX = position.x;
 		this.exactPostitionY = position.y;
@@ -45,6 +47,7 @@ public abstract class Living {
 		this.ySpeed = 0;
 		this.xSpeed = 0;
 		this.isFloating = false;
+		this.bouncing = bouncing;
 	}
 	
 	public boolean isMovingUp() {
@@ -131,15 +134,18 @@ public abstract class Living {
 	
 	public void move(long deltaTime){
 		float distance;
-		
-		if(isMovingUp || isMovingDown || isFloating){
+		System.out.println(bounceNextTime);
+		if(isMovingUp || isMovingDown || isFloating || bounceNextTime){
 			ySpeed = (float)(
 					ySpeed == 0 && isMovingUp && !isFloating
 						? baseForce/MOVEMENT_MULTIPLYER 
-						: (isMovingUp || ySpeed < 0)
-							? ySpeed - (float)this.currentWorld.getG()*(deltaTime)/1000 
-							: ySpeed - (float)this.currentWorld.getG()*(deltaTime)/1000*2
+						: bounceNextTime
+							? -ySpeed
+							: (isMovingUp || ySpeed < 0)
+								? ySpeed - (float)this.currentWorld.getG()*(deltaTime)/1000 
+								: ySpeed - (float)this.currentWorld.getG()*(deltaTime)/1000*2
 					);
+			this.bounceNextTime = false;
 			if(ySpeed > 0){
 				distance = ((float)deltaTime/1000)*BLOCKS_PER_SECOND*ySpeed*(float)this.currentWorld.getG();
 				exactPostitionY -= checkForColision(distance, DIRECTION_UP);
@@ -248,8 +254,12 @@ public abstract class Living {
 				for(Block[] r : blocks){
 					for(Block b : r){
 						if(b.isSolid){
-							ySpeed = 0;
-							setMovingDown(false);
+							if(ySpeed != 0 && this.bouncing){
+								this.bounceNextTime = true;
+							}else{
+								ySpeed = 0;
+							}
+							this.setMovingDown(false);
 							//this is so awesome because if the chat is bigger than 1 it has to check every row bevore it can set the maxDistance
 							if(maxDistanceToColision < tempMaxDistance || tempMaxDistance == 0){
 								tempMaxDistance = maxDistanceToColision;
@@ -274,7 +284,6 @@ public abstract class Living {
 		for(Block[] r : blocks){
 			for(Block b : r){
 				if(b.isSolid){
-					setMovingDown(false);
 					this.isFloating = false;
 					return;
 				}
