@@ -9,10 +9,8 @@ public class Robot extends Living{
 	
 	private String name;
 	private Color color;
-	private int energy;
-	private ArrayList<Upgrade> upgradeesInstalled;
-	
-	
+	private int energy;	
+	private Upgrade body;
 
 	public Robot(Point position, int baseSpeed, int baseForce, int healt,
 			int maxhealth, World currentWorld, String name, Color color, int energy) {
@@ -20,7 +18,7 @@ public class Robot extends Living{
 		this.name = name;
 		this.color = color;
 		this.energy = energy;
-		this.upgradeesInstalled = null;
+		this.body = null;
 	}
 	
 	public String getName() {
@@ -47,20 +45,12 @@ public class Robot extends Living{
 		this.energy = energy;
 	}
 
-	public ArrayList<Upgrade> getUpgradeesInstalled() {
-		return upgradeesInstalled;
+	public Upgrade getBody() {
+		return body;
 	}
 
-	public void setUpgradeesInstalled(ArrayList<Upgrade> upgradeesInstalled) {
-		this.upgradeesInstalled = upgradeesInstalled;
-	}
-	
-	public void addUpgrade(Upgrade upgrade){
-		
-	}
-	
-	public void removeUpgrade(Upgrade upgrade){
-		
+	public void setBody(Upgrade body) {
+		this.body = body;
 	}
 
 	@Override

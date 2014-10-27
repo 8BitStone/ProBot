@@ -10,31 +10,21 @@ public abstract class Ability {
 		this.trigger = trigger;
 	}
 	
-	
-	
 	public String getName() {
 		return name;
 	}
-
-
 
 	public void setName(String name) {
 		this.name = name;
 	}
 
-
-
 	public String getTrigger() {
 		return trigger;
 	}
 
-
-
 	public void setTrigger(String trigger) {
 		this.trigger = trigger;
 	}
-
-
 
 	abstract public void use();
 	

@@ -11,7 +11,6 @@ public class Player extends Robot {
 			int energy) {
 		super(position, baseSpeed, baseForce, healt, maxhealth, currentWorld,
 				name, color, energy);
-		// TODO Auto-generated constructor stub
 	}
 	
 	public void load(){
