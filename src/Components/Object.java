@@ -124,7 +124,7 @@ public abstract class Object {
 		if(isMovingUp || isMovingDown || isFloating || bounceNextTime){
 			ySpeed = (float)(
 					ySpeed == 0 && isMovingUp && !isFloating
-						? force/MOVEMENT_MULTIPLYER 
+						? force/MOVEMENT_MULTIPLYER
 						: bounceNextTime
 							? -ySpeed
 							: (isMovingUp || ySpeed < 0)
@@ -133,11 +133,11 @@ public abstract class Object {
 					);
 			this.bounceNextTime = false;
 			if(ySpeed > 0){
-				distance = ((float)deltaTime/1000)*BLOCKS_PER_SECOND*ySpeed*(float)this.currentWorld.getG();
+				distance = ((float)deltaTime/1000)*BLOCKS_PER_SECOND*ySpeed*MOVEMENT_MULTIPLYER;
 				exactPostitionY -= checkForColision(distance, DIRECTION_UP);
 			}else{
 				setMovingDown(true);
-				distance = ((float)deltaTime/1000)*BLOCKS_PER_SECOND*ySpeed*(float)this.currentWorld.getG();
+				distance = ((float)deltaTime/1000)*BLOCKS_PER_SECOND*ySpeed*MOVEMENT_MULTIPLYER;
 				exactPostitionY += checkForColision(distance*(-1), DIRECTION_DOWN);
 			}
 		}else{
