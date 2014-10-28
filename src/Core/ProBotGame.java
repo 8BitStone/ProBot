@@ -27,6 +27,7 @@ public class ProBotGame extends JFrame implements KeyListener, ActionListener{
 	public static final int BLOCK_SIZE = 10;
 	
 	public static final String CMD_START = "start";
+	public static final String CMD_CONTINUE = "continue";
 	
 	protected Player player;
 	protected Dimension windowSize;
@@ -94,7 +95,7 @@ public class ProBotGame extends JFrame implements KeyListener, ActionListener{
 		mainMenu.setLayout(new GridLayout(100, 1, 0, 30));
 		
 		JButton start = new JButton("Continue");
-		start.setActionCommand(CMD_START);
+		start.setActionCommand(CMD_CONTINUE);
 		start.addActionListener(this);
 		
 		mainMenu.add(start);
@@ -105,9 +106,11 @@ public class ProBotGame extends JFrame implements KeyListener, ActionListener{
 	}
 	
 	private void showGame(){
-		add(this.canvas, BorderLayout.CENTER);
+		getContentPane().remove(this.menuPanel);
+		this.requestFocus();
+		getContentPane().add(this.canvas, BorderLayout.CENTER);
 		this.canvas.createBufferStrategy(2);
-		this.canvas.show();
+		this.canvas.setVisible(true);
 	}
 
 	@Override
@@ -166,6 +169,7 @@ public class ProBotGame extends JFrame implements KeyListener, ActionListener{
 	public void actionPerformed(ActionEvent e) {
 		switch (e.getActionCommand()) {
 		case CMD_START:
+		case CMD_CONTINUE:
 			this.running = true;
 			this.lastLoopTime = System.currentTimeMillis();
         	this.showGame();
