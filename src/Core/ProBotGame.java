@@ -1,22 +1,12 @@
 package Core;
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Container;
 import java.awt.Dimension;
-import java.awt.FlowLayout;
-import java.awt.GridLayout;
-import java.awt.MenuItem;
 import java.awt.Point;
-import java.awt.PopupMenu;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
-import javax.swing.JButton;
 import javax.swing.JFrame;
-import javax.swing.JPanel;
-
 import Components.Player;
 import Components.World;
 
@@ -43,7 +33,6 @@ public class ProBotGame extends JFrame implements KeyListener{
 		
 		this.canvas = new GameCanvas(this);
 		add(this.canvas, BorderLayout.CENTER);
-		//add(this.menuPanel, BorderLayout.CENTER);
 		windowSize = new Dimension(800, 800);
 		setSize(windowSize);
 		setVisible(true); 

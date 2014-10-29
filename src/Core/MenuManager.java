@@ -1,7 +1,6 @@
 package Core;
 
 import java.awt.BorderLayout;
-import java.awt.Container;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
@@ -9,7 +8,6 @@ import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 import javax.swing.JPanel;
-import javax.swing.text.AbstractDocument.Content;
 
 
 public class MenuManager implements ActionListener{

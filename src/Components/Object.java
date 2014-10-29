@@ -70,7 +70,7 @@ public abstract class Object {
 	}
 
 	public void setMovingDown(boolean isMovingDown) {
-		this.isMovingDown = isMovingDown;
+		this.isMovingDown = isFloating ? isMovingDown : false;
 		this.isMovingUp = isMovingDown ? !isMovingDown : this.isMovingUp;
 	}
 
