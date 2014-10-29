@@ -31,7 +31,7 @@ public class ProBotGame extends JFrame implements KeyListener, ActionListener{
 	
 	protected Player player;
 	protected Dimension windowSize;
-	public boolean running = true;
+	public boolean running = true; 
 	private long lastLoopTime = System.currentTimeMillis();
 	private GameCanvas canvas;
 	private JPanel menuPanel;
@@ -142,7 +142,7 @@ public class ProBotGame extends JFrame implements KeyListener, ActionListener{
 		}
 	}
 
-	@Override
+	@Override 
 	public void keyReleased(KeyEvent e) {
 		switch (e.getKeyCode()) {
 	        case KeyEvent.VK_SPACE:

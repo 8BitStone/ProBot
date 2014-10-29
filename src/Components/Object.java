@@ -3,11 +3,13 @@ package Components;
 import java.awt.Graphics;
 import java.awt.Point;
 
+import static Core.ProBotGame.BLOCK_SIZE;
+
 public abstract class Object {
 
-	public static final int POSITION_MULTIPLYER = 10;
+	public static final int POSITION_MULTIPLYER = BLOCK_SIZE;
 	public static final int BLOCKS_PER_SECOND = 1; 
-	public static final int MOVEMENT_MULTIPLYER = 10;
+	public static final int MOVEMENT_MULTIPLYER = BLOCK_SIZE;
 	
 	public static final char DIRECTION_UP = 'u';
 	public static final char DIRECTION_RIGHT = 'r';
