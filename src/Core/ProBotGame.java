@@ -22,19 +22,16 @@ import Components.World;
 
 
 @SuppressWarnings("serial")
-public class ProBotGame extends JFrame implements KeyListener, ActionListener{
+public class ProBotGame extends JFrame implements KeyListener{
 	
 	public static final int BLOCK_SIZE = 10;
 	
-	public static final String CMD_START = "start";
-	public static final String CMD_CONTINUE = "continue";
-	
 	protected Player player;
 	protected Dimension windowSize;
-	public boolean running = true; 
+	public boolean running = false; 
 	private long lastLoopTime = System.currentTimeMillis();
 	private GameCanvas canvas;
-	private JPanel menuPanel;
+	private MenuManager menuManager;
 	
 	public ProBotGame() {
 		//For JFrame
@@ -42,11 +39,9 @@ public class ProBotGame extends JFrame implements KeyListener, ActionListener{
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setResizable(false);
 		
-		this.load();
+		this.menuManager = new MenuManager(this);
 		
 		this.canvas = new GameCanvas(this);
-		this.menuPanel = new JPanel();
-		this.menuPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 0, 100));
 		add(this.canvas, BorderLayout.CENTER);
 		//add(this.menuPanel, BorderLayout.CENTER);
 		windowSize = new Dimension(800, 800);
@@ -56,6 +51,7 @@ public class ProBotGame extends JFrame implements KeyListener, ActionListener{
 		
 		addKeyListener(this);
 		
+		this.menuManager.showMainMenu();
 	}
 
 
@@ -86,31 +82,23 @@ public class ProBotGame extends JFrame implements KeyListener, ActionListener{
 		player.move(deltaTime);
 	}
 	
-	private void showPauseMenu(){
-		getContentPane().remove(this.canvas);
-		
-		menuPanel.removeAll();
-		
-		JPanel mainMenu = new JPanel();
-		mainMenu.setLayout(new GridLayout(100, 1, 0, 30));
-		
-		JButton start = new JButton("Continue");
-		start.setActionCommand(CMD_CONTINUE);
-		start.addActionListener(this);
-		
-		mainMenu.add(start);
-			
-		menuPanel.add(mainMenu);
-		add(this.menuPanel, BorderLayout.CENTER);
-		setVisible(true);
-	}
-	
 	private void showGame(){
-		getContentPane().remove(this.menuPanel);
+		getContentPane().removeAll();
 		this.requestFocus();
 		getContentPane().add(this.canvas, BorderLayout.CENTER);
 		this.canvas.createBufferStrategy(2);
 		this.canvas.setVisible(true);
+	}
+	
+	public void startGame(){
+		this.load();
+		this.continueGame();
+	}
+	
+	public void continueGame(){
+		this.running = true;
+		this.lastLoopTime = System.currentTimeMillis();
+    	this.showGame();
 	}
 
 	@Override
@@ -123,7 +111,7 @@ public class ProBotGame extends JFrame implements KeyListener, ActionListener{
 	            	this.lastLoopTime = System.currentTimeMillis();
 	            	this.showGame();
 	            }else{
-	            	this.showPauseMenu();
+	            	menuManager.showPauseMenu();
 	            }
 	            break;
 	        case KeyEvent.VK_SPACE:
@@ -164,17 +152,5 @@ public class ProBotGame extends JFrame implements KeyListener, ActionListener{
 	@Override
 	public void keyTyped(KeyEvent e) {}
 
-
-	@Override
-	public void actionPerformed(ActionEvent e) {
-		switch (e.getActionCommand()) {
-		case CMD_START:
-		case CMD_CONTINUE:
-			this.running = true;
-			this.lastLoopTime = System.currentTimeMillis();
-        	this.showGame();
-			break;
-		}	
-	}
 
 }
