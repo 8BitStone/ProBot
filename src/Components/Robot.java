@@ -10,11 +10,15 @@ public class Robot extends Living{
 	private String name;
 	private Color color;
 	private int energy;	
+	private int legForce;
+	private int armForce;
 	private Upgrade body;
 
 	public Robot(Point position, int baseSpeed, int baseForce, int healt,
 			int maxhealth, World currentWorld, String name, Color color, int energy) {
 		super(position, baseSpeed, baseForce, healt, maxhealth, currentWorld, false);
+		this.legForce = baseForce;
+		this.armForce = baseForce;
 		this.name = name;
 		this.color = color;
 		this.energy = energy;

@@ -22,7 +22,7 @@ public class World {
 	private String name;
 	private int width = 0;
 	private int height = 0;
-	private double G = 9.81;
+	private double G = 5;
 	private Block[][] blocks;
 	
 	private static Map<Color, Block> blockTypes = new HashMap<Color, Block>();

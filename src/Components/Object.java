@@ -70,7 +70,7 @@ public abstract class Object {
 	}
 
 	public void setMovingDown(boolean isMovingDown) {
-		this.isMovingDown = isFloating ? isMovingDown : false;
+		this.isMovingDown = isMovingDown;
 		this.isMovingUp = isMovingDown ? !isMovingDown : this.isMovingUp;
 	}
 
@@ -123,15 +123,15 @@ public abstract class Object {
 	public void move(long deltaTime){
 		float distance;
 
-		if(isMovingUp || isMovingDown || isFloating || bounceNextTime){
+		if(isMovingUp || isFloating || bounceNextTime){
 			ySpeed = (float)(
 					ySpeed == 0 && isMovingUp && !isFloating
 						? force/MOVEMENT_MULTIPLYER
 						: bounceNextTime
 							? -ySpeed
 							: (isMovingUp || ySpeed < 0)
-								? ySpeed - (float)this.currentWorld.getG()*(deltaTime)/1000 
-								: ySpeed - (float)this.currentWorld.getG()*(deltaTime)/1000*2
+								? ySpeed - (float)this.currentWorld.getG()*deltaTime/1000 
+								: ySpeed - (float)this.currentWorld.getG()*deltaTime/1000*2
 					);
 			this.bounceNextTime = false;
 			if(ySpeed > 0){

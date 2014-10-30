@@ -14,7 +14,7 @@ import Components.World;
 @SuppressWarnings("serial")
 public class ProBotGame extends JFrame implements KeyListener{
 	
-	public static final int BLOCK_SIZE = 10;
+	public static final int BLOCK_SIZE = 20;
 	
 	protected Player player;
 	protected Dimension windowSize;
@@ -33,7 +33,7 @@ public class ProBotGame extends JFrame implements KeyListener{
 		
 		this.canvas = new GameCanvas(this);
 		add(this.canvas, BorderLayout.CENTER);
-		windowSize = new Dimension(800, 800);
+		windowSize = new Dimension(1280, 960);
 		setSize(windowSize);
 		setVisible(true); 
 		canvas.createBufferStrategy(2);
