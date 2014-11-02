@@ -53,8 +53,28 @@ public class Robot extends Living{
 		return body;
 	}
 
-	public void setBody(Upgrade body) {
+	public boolean setBody(Upgrade body) {
+		if(body.getType() != UpgradeType.body){
+			return false;
+		}
 		this.body = body;
+		return true;
+	}
+
+	public int getLegForce() {
+		return legForce;
+	}
+
+	public void addLegForce(int legForce) {
+		this.legForce += legForce;
+	}
+
+	public int getArmForce() {
+		return armForce;
+	}
+
+	public void addArmForce(int armForce) {
+		this.armForce += armForce;
 	}
 
 	@Override

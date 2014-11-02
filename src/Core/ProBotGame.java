@@ -97,8 +97,7 @@ public class ProBotGame extends JFrame implements KeyListener{
 	        case KeyEvent.VK_ESCAPE:
 	            this.running = !this.running;
 	            if(this.running){
-	            	this.lastLoopTime = System.currentTimeMillis();
-	            	this.showGame();
+	            	this.continueGame();
 	            }else{
 	            	menuManager.showPauseMenu();
 	            }

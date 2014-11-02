@@ -25,8 +25,12 @@ public class Slot {
 		return upgrade;
 	}
 
-	public void setUpgrade(Upgrade upgrade) {
+	public boolean setUpgrade(Upgrade upgrade) {
+		if(upgrade.getType() != this.type){
+			return false;
+		}
 		this.upgrade = upgrade;
+		return true;
 	}
 
 }
