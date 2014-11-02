@@ -8,6 +8,7 @@ import java.awt.image.BufferStrategy;
 
 import javax.swing.Timer;
 
+@SuppressWarnings("serial")
 public class GameCanvas extends Canvas {
 	
 	private boolean repaintInProgress = false;
