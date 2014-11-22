@@ -7,6 +7,8 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
 import javax.swing.JFrame;
+import javax.swing.Timer;
+
 import Components.Player;
 import Components.World;
 
@@ -21,6 +23,7 @@ public class ProBotGame extends JFrame implements KeyListener{
 	public boolean running = false; 
 	private long lastLoopTime = System.currentTimeMillis();
 	private GameCanvas canvas;
+	protected Gui gui;
 	private MenuManager menuManager;
 	
 	public ProBotGame() {
@@ -30,6 +33,7 @@ public class ProBotGame extends JFrame implements KeyListener{
 		setResizable(false);
 		
 		this.menuManager = new MenuManager(this);
+		this.gui = new Gui(this);
 		
 		this.canvas = new GameCanvas(this);
 		add(this.canvas, BorderLayout.CENTER);
@@ -37,6 +41,9 @@ public class ProBotGame extends JFrame implements KeyListener{
 		setSize(windowSize);
 		setVisible(true); 
 		canvas.createBufferStrategy(2);
+		
+		GameChrono chrono = new GameChrono(this.canvas, this);
+		new Timer(16, chrono).start(); // 20 fot 50MHz, 16 for 60MHz
 		
 		addKeyListener(this);
 		

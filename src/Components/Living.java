@@ -4,22 +4,25 @@ import java.awt.Point;
 
 public abstract class Living extends Object{
 	
-	private int healt;
+	private int health;
 	private int maxHealth;
 	
-	public Living(Point position, int baseSpeed, int baseForce, int healt,
+	public Living(Point position, int baseSpeed, int baseForce, int health,
 			int maxHealt, World currentWorld, boolean bouncing) {
 		super(position, baseSpeed, baseForce, currentWorld, bouncing);
-		this.healt = healt;
+		this.health = health;
 		this.maxHealth = maxHealt;
 	}
 
-	public int getHealt() {
-		return healt;
+	public int getHealth() {
+		return health;
 	}
 
-	public void setHealt(int healt) {
-		this.healt = healt;
+	public void setHealth(int healt) {
+		if(health <= 0){
+			this.die();
+		}
+		this.health = healt;
 	}
 	
 	public int getMaxHealth() {
