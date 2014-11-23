@@ -14,6 +14,9 @@ public class SlotIconPanel extends IconPanel {
 	public SlotIconPanel(Slot slot) {
 		super();
 		this.slot = slot;
+		if(slot.getUpgrade() != null){
+			this.setUpgrade(slot.getUpgrade());
+		}
 	}
 	
 	public void setUpgrade(Upgrade u){
