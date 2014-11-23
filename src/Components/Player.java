@@ -30,4 +30,8 @@ public class Player extends Robot {
 		g.fillRect(position.x, position.y, this.width*POSITION_MULTIPLYER, this.height*POSITION_MULTIPLYER);
 	}
 	
+	public void die(){
+		
+	}
+	
 }

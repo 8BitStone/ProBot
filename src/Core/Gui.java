@@ -16,7 +16,6 @@ public class Gui {
 	}
 	
 	private void drawHealthBar(Graphics g){
-		game.player.setHealth(game.player.getHealth()-1);
 		g.setColor(new Color(9, 21, 178));
 		g.fillPolygon(
 				new int[]{50, 300, 320, 70}, 

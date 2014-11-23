@@ -3,9 +3,6 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Point;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
-
 import javax.swing.JFrame;
 import javax.swing.Timer;
 
@@ -14,7 +11,7 @@ import Components.World;
 
 
 @SuppressWarnings("serial")
-public class ProBotGame extends JFrame implements KeyListener{
+public class ProBotGame extends JFrame{
 	
 	public static final int BLOCK_SIZE = 20;
 	
@@ -24,7 +21,7 @@ public class ProBotGame extends JFrame implements KeyListener{
 	private long lastLoopTime = System.currentTimeMillis();
 	private GameCanvas canvas;
 	protected Gui gui;
-	private MenuManager menuManager;
+	protected MenuManager menuManager;
 	
 	public ProBotGame() {
 		//For JFrame
@@ -40,13 +37,12 @@ public class ProBotGame extends JFrame implements KeyListener{
 		windowSize = new Dimension(1280, 960);
 		setSize(windowSize);
 		setVisible(true); 
+		this.canvas.requestFocus();
 		canvas.createBufferStrategy(2);
 		
 		GameChrono chrono = new GameChrono(this.canvas, this);
 		new Timer(16, chrono).start(); // 20 fot 50MHz, 16 for 60MHz
-		
-		addKeyListener(this);
-		
+				
 		this.menuManager.showMainMenu();
 	}
 
@@ -78,14 +74,6 @@ public class ProBotGame extends JFrame implements KeyListener{
 		player.move(deltaTime);
 	}
 	
-	private void showGame(){
-		getContentPane().removeAll();
-		this.requestFocus();
-		getContentPane().add(this.canvas, BorderLayout.CENTER);
-		this.canvas.createBufferStrategy(2);
-		this.canvas.setVisible(true);
-	}
-	
 	public void startGame(){
 		this.load();
 		this.continueGame();
@@ -96,56 +84,12 @@ public class ProBotGame extends JFrame implements KeyListener{
 		this.lastLoopTime = System.currentTimeMillis();
     	this.showGame();
 	}
-
-	@Override
-	public void keyPressed(KeyEvent e) {
-		switch (e.getKeyCode()) {
-	        case KeyEvent.VK_P:
-	        case KeyEvent.VK_ESCAPE:
-	            this.running = !this.running;
-	            if(this.running){
-	            	this.continueGame();
-	            }else{
-	            	menuManager.showPauseMenu();
-	            }
-	            break;
-	        case KeyEvent.VK_SPACE:
-	        case KeyEvent.VK_W:
-	            player.setMovingUp(true);
-	            break;
-	        case KeyEvent.VK_D:
-	            player.setMovingRight(true);
-	            break;
-	        case KeyEvent.VK_S:
-	            player.setMovingDown(true);
-	            break;
-	        case KeyEvent.VK_A:
-	            player.setMovingLeft(true);
-	            break;
-		}
+	
+	private void showGame(){
+		getContentPane().removeAll();
+		getContentPane().add(this.canvas, BorderLayout.CENTER);
+		this.canvas.createBufferStrategy(2);
+		this.canvas.setVisible(true);
+		this.canvas.requestFocus();
 	}
-
-	@Override 
-	public void keyReleased(KeyEvent e) {
-		switch (e.getKeyCode()) {
-	        case KeyEvent.VK_SPACE:
-	        case KeyEvent.VK_W:
-	            player.setMovingUp(false);
-	            break;
-	        case KeyEvent.VK_D:
-	            player.setMovingRight(false);
-	            break;
-	        case KeyEvent.VK_S:
-	            player.setMovingDown(false);
-	            break;
-	        case KeyEvent.VK_A:
-	            player.setMovingLeft(false);
-	            break;
-		}
-	}
-
-	@Override
-	public void keyTyped(KeyEvent e) {}
-
-
 }

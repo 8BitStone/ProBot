@@ -22,6 +22,7 @@ public class MenuManager implements ActionListener{
 		this.game = game;
 		this.menuPanel = new JPanel();
 		this.menuPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 0, 100));
+		this.menuPanel.setFocusable(false);
 	}
 	
 	public void showPauseMenu(){
