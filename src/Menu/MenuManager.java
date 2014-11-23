@@ -1,4 +1,6 @@
-package Core;
+package Menu;
+
+import Core.ProBotGame;
 
 
 public class MenuManager{

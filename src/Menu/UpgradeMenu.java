@@ -1,4 +1,4 @@
-package Core;
+package Menu;
 
 import java.awt.Dimension;
 import java.awt.FlowLayout;
@@ -9,6 +9,9 @@ import java.awt.event.ActionEvent;
 import javax.swing.JPanel;
 import javax.swing.border.TitledBorder;
 
+import Upgrades.Leg;
+import Core.ProBotGame;
+
 public class UpgradeMenu extends Menu{
 
 	public UpgradeMenu(ProBotGame game) {
@@ -16,13 +19,12 @@ public class UpgradeMenu extends Menu{
 	}
 	
 	public void prepareSpecificMenu(){
-		Dimension panelSize = new Dimension(game.windowSize.width/2-20, game.windowSize.height-20);
+		Dimension panelSize = new Dimension(game.getWindowSize().width/2-20, game.getWindowSize().height-20);
 		this.menuWrapper.setLayout(null);
 		menuPanel.setLayout(new FlowLayout(FlowLayout.LEFT, 10, 10));
-		menuPanel.setLocation(15, 10);
 		menuPanel.setSize(panelSize);
 		for(int i = 1; i <= 6; i++){
-			menuPanel.add(new IconPanel());
+			menuPanel.add(new UpgradeIconPanel(new Leg(null, "bla", null)));
 		}
 		
 		TitledBorder upgradeTB = new TitledBorder("Upgrades");
@@ -30,10 +32,12 @@ public class UpgradeMenu extends Menu{
 		
 		JPanel slotPanel = new JPanel();
 		slotPanel.setLayout(new FlowLayout(FlowLayout.RIGHT, 5, 0));
-		slotPanel.setLocation(panelSize.width+25, 10);
 		slotPanel.setSize(panelSize);
-		slotPanel.add(new IconPanel());
-		slotPanel.add(new IconPanel());
+		slotPanel.add(new SlotIconPanel(null));
+		slotPanel.add(new SlotIconPanel(null));
+		
+		menuPanel.setLocation(panelSize.width+25, 10);
+		slotPanel.setLocation(15, 10);
 		
 		TitledBorder slotTB = new TitledBorder("Slots");
 		slotPanel.setBorder(slotTB);

@@ -1,10 +1,13 @@
-package Core;
+package Menu;
 
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+
 import javax.swing.JPanel;
+
+import Core.ProBotGame;
 
 public abstract class Menu implements ActionListener{
 	

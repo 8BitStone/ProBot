@@ -27,8 +27,8 @@ public class GameCanvas extends Canvas{
 		BufferStrategy strategy = getBufferStrategy();
 		Graphics g = strategy.getDrawGraphics();
 		
-		game.player.getCurrentWorld().paint(g, game.windowSize, game.player.getPosition());
-		game.player.paint(g, new Point(game.windowSize.width/2, game.windowSize.height/2));
+		game.getPlayer().getCurrentWorld().paint(g, game.getWindowSize(), game.getPlayer().getPosition());
+		game.getPlayer().paint(g, new Point(game.getWindowSize().width/2, game.getWindowSize().height/2));
 		game.gui.updateInGame(g);
 		
 		if(g != null){

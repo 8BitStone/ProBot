@@ -1,6 +1,8 @@
 package Components;
 
-public abstract class Upgrade {
+import java.awt.Graphics;
+
+public abstract class Upgrade{
 	
 	private UpgradeType type;
 	private String name;
@@ -37,6 +39,8 @@ public abstract class Upgrade {
 		this.additionalAbility = additionalAbility;
 	}
 	
-	
+	public void paintInGame(Graphics g){
+		
+	}
 
 }

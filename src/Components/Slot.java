@@ -1,8 +1,11 @@
 package Components;
 
+import java.awt.Dimension;
+import java.awt.Graphics;
+import java.awt.Panel;
 import java.awt.Point;
 
-public class Slot {
+public class Slot{
 
 	private UpgradeType type;
 	private Point position; // in percent of the size
@@ -31,6 +34,10 @@ public class Slot {
 		}
 		this.upgrade = upgrade;
 		return true;
+	}
+	
+	public void paintInGame(Graphics g){
+		
 	}
 
 }

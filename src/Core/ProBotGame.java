@@ -11,6 +11,7 @@ import javax.swing.Timer;
 
 import Components.Player;
 import Components.World;
+import Menu.MenuManager;
 
 
 @SuppressWarnings("serial")
@@ -18,9 +19,10 @@ public class ProBotGame extends JFrame implements KeyListener{
 	
 	public static final int BLOCK_SIZE = 20;
 	
-	protected Player player;
-	protected Dimension windowSize;
-	public boolean running = false; 
+	private Player player;
+	private Dimension windowSize;
+	private boolean running = false; 
+	private boolean started = false;
 	private long lastLoopTime = System.currentTimeMillis();
 	private GameCanvas canvas;
 	protected Gui gui;
@@ -38,7 +40,7 @@ public class ProBotGame extends JFrame implements KeyListener{
 		this.canvas = new GameCanvas(this);
 		add(this.canvas, BorderLayout.CENTER);
 		windowSize = new Dimension(1280, 960);
-		setSize(new Dimension(windowSize.width+6, windowSize.height+29)); //plus the border size so windowSize is the Resolution of the Game
+		setSize(new Dimension(getWindowSize().width+6, getWindowSize().height+29)); //plus the border size so windowSize is the Resolution of the Game
 		setVisible(true); 
 		canvas.createBufferStrategy(2);
 		System.out.println(canvas.getSize());
@@ -54,6 +56,21 @@ public class ProBotGame extends JFrame implements KeyListener{
 		this.requestFocus();
 	}
 
+	public Dimension getWindowSize() {
+		return windowSize;
+	}
+	
+	public Player getPlayer(){
+		return player;
+	}
+	
+	public boolean isRunning(){
+		return running;
+	}
+	
+	public boolean isStartet(){
+		return started;
+	}
 
 	public void load(){
 		
@@ -85,6 +102,7 @@ public class ProBotGame extends JFrame implements KeyListener{
 	public void startGame(){
 		this.load();
 		this.continueGame();
+		this.started = true;
 	}
 	
 	public void continueGame(){
@@ -112,6 +130,9 @@ public class ProBotGame extends JFrame implements KeyListener{
 	        	}
 	            break;
 	        case KeyEvent.VK_U:
+	        	if(!this.started){
+	        		return;
+	        	}
 	        	this.running = !this.running;
 	        	if(this.running){
 	        		this.continueGame();

@@ -1,13 +1,15 @@
-package Core;
+package Menu;
 
 import java.awt.BorderLayout;
 import java.awt.GridLayout;
 
 import javax.swing.JButton;
 
-public class MainMenu extends Menu {
+import Core.ProBotGame;
 
-	public MainMenu(ProBotGame game) {
+public class PauseMenu extends Menu {
+
+	public PauseMenu(ProBotGame game) {
 		super(game);
 		// TODO Auto-generated constructor stub
 	}
@@ -16,11 +18,11 @@ public class MainMenu extends Menu {
 	public void prepareSpecificMenu() {
 		menuPanel.setLayout(new GridLayout(100, 1, 0, 30));
 		
-		JButton start = new JButton("Start");
-		start.setActionCommand(CMD_START);
+		JButton start = new JButton("Continue");
+		start.setActionCommand(CMD_CONTINUE);
 		start.addActionListener(this);
 		
-		menuPanel.add(start);	
+		menuPanel.add(start);
 	}
 
 }
