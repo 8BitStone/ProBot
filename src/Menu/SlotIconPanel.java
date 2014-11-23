@@ -1,5 +1,6 @@
 package Menu;
 
+import java.awt.Color;
 import java.awt.Graphics;
 
 import Components.Slot;
@@ -15,8 +16,23 @@ public class SlotIconPanel extends IconPanel {
 		this.slot = slot;
 	}
 	
+	public void setUpgrade(Upgrade u){
+		this.upgrade = u;
+		this.setBackground(Color.red);
+	}
+	
+	public Slot getSlot(){
+		return this.slot;
+	}
+	
 	public void paintComponent(Graphics g){
-		super.paintComponents(g);
+		if(this.upgrade == null){
+			//draw slot icon
+			super.paintComponents(g);
+		}else{
+			//draw upgrade icon
+			super.paintComponents(g);
+		}
 	}
 
 }

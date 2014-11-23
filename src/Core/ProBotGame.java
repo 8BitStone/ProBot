@@ -46,7 +46,6 @@ public class ProBotGame extends JFrame implements KeyListener{
 		setSize(new Dimension(getWindowSize().width+6, getWindowSize().height+29)); //plus the border size so windowSize is the Resolution of the Game
 		setVisible(true); 
 		canvas.createBufferStrategy(2);
-		System.out.println(canvas.getSize());
 		
 		GameChrono chrono = new GameChrono(this.canvas, this);
 		new Timer(16, chrono).start(); // 20 fot 50MHz, 16 for 60MHz
