@@ -27,12 +27,15 @@ public class ProBotGame extends JFrame implements KeyListener{
 	private GameCanvas canvas;
 	protected Gui gui;
 	protected MenuManager menuManager;
+	private UpgradeManager upgradeManager;
 	
 	public ProBotGame() {
 		//For JFrame
 		super("ProBot");
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setResizable(false);
+		
+		this.upgradeManager = new UpgradeManager();
 		
 		this.menuManager = new MenuManager(this);
 		this.gui = new Gui(this);
@@ -70,6 +73,10 @@ public class ProBotGame extends JFrame implements KeyListener{
 	
 	public boolean isStartet(){
 		return started;
+	}
+	
+	public UpgradeManager getUpgradeManager(){
+		return this.upgradeManager;
 	}
 
 	public void load(){

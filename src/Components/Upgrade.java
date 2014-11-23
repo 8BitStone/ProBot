@@ -2,7 +2,7 @@ package Components;
 
 import java.awt.Graphics;
 
-public abstract class Upgrade{
+public class Upgrade{
 	
 	private UpgradeType type;
 	private String name;

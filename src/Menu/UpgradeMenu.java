@@ -2,14 +2,12 @@ package Menu;
 
 import java.awt.Dimension;
 import java.awt.FlowLayout;
-import java.awt.GridLayout;
-import java.awt.Point;
 import java.awt.event.ActionEvent;
 
 import javax.swing.JPanel;
 import javax.swing.border.TitledBorder;
 
-import Upgrades.Leg;
+import Components.Upgrade;
 import Core.ProBotGame;
 
 public class UpgradeMenu extends Menu{
@@ -24,7 +22,7 @@ public class UpgradeMenu extends Menu{
 		menuPanel.setLayout(new FlowLayout(FlowLayout.LEFT, 10, 10));
 		menuPanel.setSize(panelSize);
 		for(int i = 1; i <= 6; i++){
-			menuPanel.add(new UpgradeIconPanel(new Leg(null, "bla", null)));
+			menuPanel.add(new UpgradeIconPanel(new Upgrade(null, "bla", null)));
 		}
 		
 		TitledBorder upgradeTB = new TitledBorder("Upgrades");
