@@ -3,6 +3,9 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Point;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
+
 import javax.swing.JFrame;
 import javax.swing.Timer;
 
@@ -11,7 +14,7 @@ import Components.World;
 
 
 @SuppressWarnings("serial")
-public class ProBotGame extends JFrame{
+public class ProBotGame extends JFrame implements KeyListener{
 	
 	public static final int BLOCK_SIZE = 20;
 	
@@ -37,13 +40,17 @@ public class ProBotGame extends JFrame{
 		windowSize = new Dimension(1280, 960);
 		setSize(windowSize);
 		setVisible(true); 
-		this.canvas.requestFocus();
 		canvas.createBufferStrategy(2);
 		
 		GameChrono chrono = new GameChrono(this.canvas, this);
 		new Timer(16, chrono).start(); // 20 fot 50MHz, 16 for 60MHz
+		
+		addKeyListener(this);
 				
 		this.menuManager.showMainMenu();
+		
+		this.setFocusable(true);
+		this.requestFocus();
 	}
 
 
@@ -90,6 +97,56 @@ public class ProBotGame extends JFrame{
 		getContentPane().add(this.canvas, BorderLayout.CENTER);
 		this.canvas.createBufferStrategy(2);
 		this.canvas.setVisible(true);
-		this.canvas.requestFocus();
 	}
+	
+	public void keyPressed(KeyEvent e) {
+		switch (e.getKeyCode()) {
+	        case KeyEvent.VK_P:
+	        case KeyEvent.VK_ESCAPE:
+	        	this.running = !this.running;
+	        	if(this.running){
+	        		this.continueGame();
+	        	}else{
+	        		menuManager.showPauseMenu();
+	        	}
+	            break;
+	        case KeyEvent.VK_U:
+	        	this.menuManager.showUpgradeMenu();
+	        	break;
+	        case KeyEvent.VK_SPACE:
+	        case KeyEvent.VK_W:
+	        	this.player.setMovingUp(true);
+	            break;
+	        case KeyEvent.VK_D:
+	        	this.player.setMovingRight(true);
+	            break;
+	        case KeyEvent.VK_S:
+	        	this.player.setMovingDown(true);
+	            break;
+	        case KeyEvent.VK_A:
+	        	this.player.setMovingLeft(true);
+	            break;
+		}
+	}
+
+	public void keyReleased(KeyEvent e) {
+		switch (e.getKeyCode()) {
+	        case KeyEvent.VK_SPACE:
+	        case KeyEvent.VK_W:
+	        	this.player.setMovingUp(false);
+	            break;
+	        case KeyEvent.VK_D:
+	        	this.player.setMovingRight(false);
+	            break;
+	        case KeyEvent.VK_S:
+	        	this.player.setMovingDown(false);
+	            break;
+	        case KeyEvent.VK_A:
+	        	this.player.setMovingLeft(false);
+	            break;
+		}
+	}
+
+	public void keyTyped(KeyEvent e) {}
+
 }

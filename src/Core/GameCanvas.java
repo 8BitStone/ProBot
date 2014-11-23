@@ -4,14 +4,10 @@ import java.awt.Canvas;
 import java.awt.Graphics;
 import java.awt.Point;
 import java.awt.Toolkit;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 import java.awt.image.BufferStrategy;
 
-import javax.swing.Timer;
-
 @SuppressWarnings("serial")
-public class GameCanvas extends Canvas implements KeyListener{
+public class GameCanvas extends Canvas{
 	
 	private boolean repaintInProgress = false;
 	private ProBotGame game;
@@ -19,7 +15,7 @@ public class GameCanvas extends Canvas implements KeyListener{
 	public GameCanvas(ProBotGame game) {
 		this.game = game;
 		setIgnoreRepaint(true);
-		addKeyListener(this);
+		setFocusable(false);
 	}
 	
 	public void inRepaint(){
@@ -42,54 +38,4 @@ public class GameCanvas extends Canvas implements KeyListener{
 		Toolkit.getDefaultToolkit().sync();
 		repaintInProgress = false;
 	}
-	
-	@Override
-	public void keyPressed(KeyEvent e) {
-		switch (e.getKeyCode()) {
-	        case KeyEvent.VK_P:
-	        case KeyEvent.VK_ESCAPE:
-	            game.running = !game.running;
-	            if(game.running){
-	            	game.continueGame();
-	            }else{
-	            	game.menuManager.showPauseMenu();
-	            }
-	            break;
-	        case KeyEvent.VK_SPACE:
-	        case KeyEvent.VK_W:
-	        	game.player.setMovingUp(true);
-	            break;
-	        case KeyEvent.VK_D:
-	        	game.player.setMovingRight(true);
-	            break;
-	        case KeyEvent.VK_S:
-	        	game.player.setMovingDown(true);
-	            break;
-	        case KeyEvent.VK_A:
-	        	game.player.setMovingLeft(true);
-	            break;
-		}
-	}
-
-	@Override 
-	public void keyReleased(KeyEvent e) {
-		switch (e.getKeyCode()) {
-	        case KeyEvent.VK_SPACE:
-	        case KeyEvent.VK_W:
-	        	game.player.setMovingUp(false);
-	            break;
-	        case KeyEvent.VK_D:
-	        	game.player.setMovingRight(false);
-	            break;
-	        case KeyEvent.VK_S:
-	        	game.player.setMovingDown(false);
-	            break;
-	        case KeyEvent.VK_A:
-	        	game.player.setMovingLeft(false);
-	            break;
-		}
-	}
-
-	@Override
-	public void keyTyped(KeyEvent e) {}
 }
