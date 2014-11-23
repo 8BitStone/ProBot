@@ -29,15 +29,16 @@ public abstract class Menu implements ActionListener{
 		this.menuWrapper.setFocusable(false);
 		this.menuPanel = new JPanel();
 		this.menuPanel.setFocusable(false);
-		this.menuWrapper.add(this.menuPanel);
 	}
 	
 	public void show(){
 		game.getContentPane().removeAll();
+		menuWrapper.removeAll();
 		menuPanel.removeAll();
 		
 		this.prepareSpecificMenu();
 		
+		this.menuWrapper.add(this.menuPanel);
 		game.add(this.menuWrapper, BorderLayout.CENTER);
 		game.setVisible(true);
 	}

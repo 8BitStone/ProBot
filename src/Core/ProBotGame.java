@@ -38,9 +38,10 @@ public class ProBotGame extends JFrame implements KeyListener{
 		this.canvas = new GameCanvas(this);
 		add(this.canvas, BorderLayout.CENTER);
 		windowSize = new Dimension(1280, 960);
-		setSize(windowSize);
+		setSize(new Dimension(windowSize.width+6, windowSize.height+29)); //plus the border size so windowSize is the Resolution of the Game
 		setVisible(true); 
 		canvas.createBufferStrategy(2);
+		System.out.println(canvas.getSize());
 		
 		GameChrono chrono = new GameChrono(this.canvas, this);
 		new Timer(16, chrono).start(); // 20 fot 50MHz, 16 for 60MHz
@@ -111,7 +112,12 @@ public class ProBotGame extends JFrame implements KeyListener{
 	        	}
 	            break;
 	        case KeyEvent.VK_U:
-	        	this.menuManager.showUpgradeMenu();
+	        	this.running = !this.running;
+	        	if(this.running){
+	        		this.continueGame();
+	        	}else{
+	        		this.menuManager.showUpgradeMenu();
+	        	}
 	        	break;
 	        case KeyEvent.VK_SPACE:
 	        case KeyEvent.VK_W:

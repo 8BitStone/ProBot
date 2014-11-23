@@ -21,9 +21,6 @@ public class PauseMenu extends Menu {
 		start.addActionListener(this);
 		
 		menuPanel.add(start);
-			
-		game.add(this.menuWrapper, BorderLayout.CENTER);
-		game.setVisible(true);
 	}
 
 }

@@ -20,10 +20,7 @@ public class MainMenu extends Menu {
 		start.setActionCommand(CMD_START);
 		start.addActionListener(this);
 		
-		menuPanel.add(start);
-			
-		game.add(this.menuWrapper, BorderLayout.CENTER);
-		game.setVisible(true);		
+		menuPanel.add(start);	
 	}
 
 }
