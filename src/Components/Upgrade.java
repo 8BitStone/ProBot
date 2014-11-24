@@ -1,6 +1,12 @@
 package Components;
 
 import java.awt.Graphics;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+import java.net.URL;
+
+import javax.imageio.ImageIO;
 
 public class Upgrade{
 	
@@ -37,6 +43,15 @@ public class Upgrade{
 
 	public void setAdditionalAbility(Ability additionalAbility) {
 		this.additionalAbility = additionalAbility;
+	}
+	
+	public BufferedImage getIcon(){
+		BufferedImage icon = null;
+		try {
+			URL ulr = getClass().getResource("/Icons/"+this.name.replaceAll("\\s","").toLowerCase()+".png");
+			icon = ImageIO.read(new File(ulr.getPath()));
+		} catch (IOException e) {}
+		return icon;
 	}
 	
 	public void paintInGame(Graphics g){

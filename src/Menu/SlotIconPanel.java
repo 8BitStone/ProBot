@@ -21,21 +21,15 @@ public class SlotIconPanel extends IconPanel {
 	
 	public void setUpgrade(Upgrade u){
 		this.upgrade = u;
-		this.setBackground(Color.red);
 	}
 	
 	public Slot getSlot(){
 		return this.slot;
 	}
 	
-	public void paintComponent(Graphics g){
-		if(this.upgrade == null){
-			//draw slot icon
-			super.paintComponents(g);
-		}else{
-			//draw upgrade icon
-			super.paintComponents(g);
-		}
+	public void paint(Graphics g){
+		//#ToDo: doesent redraw because of dont know
+		g.drawImage(this.slot.getIcon(), 0, 0, null);
 	}
 
 }

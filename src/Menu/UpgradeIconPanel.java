@@ -17,8 +17,8 @@ public class UpgradeIconPanel extends IconPanel {
 		return this.upgrade;
 	}
 	
-	public void paintComponent(Graphics g){
-		super.paintComponents(g);
+	public void paint(Graphics g){
+		g.drawImage(this.upgrade.getIcon(), 0, 0, null);
 	}
 
 }
