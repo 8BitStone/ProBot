@@ -2,6 +2,8 @@ package Menu;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Image;
+import java.awt.image.ImageObserver;
 
 import Components.Slot;
 import Components.Upgrade;
@@ -28,7 +30,6 @@ public class SlotIconPanel extends IconPanel {
 	}
 	
 	public void paint(Graphics g){
-		//#ToDo: doesent redraw because of dont know
 		g.drawImage(this.slot.getIcon(), 0, 0, null);
 	}
 

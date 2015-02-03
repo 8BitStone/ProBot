@@ -55,10 +55,11 @@ public class UpgradeMenu extends Menu implements MouseListener{
 	}
 	
 	private void setUpgrade(Upgrade upgrade){
-		if(this.selectedIconPanel.getSlot().setUpgrade(upgrade)){
-			this.selectedIconPanel.setUpgrade(upgrade);
+		if(!this.selectedIconPanel.getSlot().setUpgrade(upgrade)){
+			return;
 		}
-		this.menuWrapper.paintAll(this.menuWrapper.getGraphics());
+		this.selectedIconPanel.setUpgrade(upgrade);
+		this.selectedIconPanel.repaint();
 	}
 	
 	private void showMatchingUpgrades(SlotIconPanel slotIconPanel){

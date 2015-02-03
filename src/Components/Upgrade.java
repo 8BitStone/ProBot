@@ -48,8 +48,8 @@ public class Upgrade{
 	public BufferedImage getIcon(){
 		BufferedImage icon = null;
 		try {
-			URL ulr = getClass().getResource("/Icons/"+this.name.replaceAll("\\s","").toLowerCase()+".png");
-			icon = ImageIO.read(new File(ulr.getPath()));
+			URL url = getClass().getResource("/Icons/"+this.name.replaceAll("\\s","").toLowerCase()+".png");
+			icon = ImageIO.read(new File(url.getPath()));
 		} catch (IOException e) {}
 		return icon;
 	}
