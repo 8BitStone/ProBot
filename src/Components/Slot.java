@@ -12,20 +12,14 @@ import javax.imageio.ImageIO;
 public class Slot{
 
 	private UpgradeType type;
-	private Point position; // in percent of the size
 	private Upgrade upgrade;
 	
 	public Slot(UpgradeType type, Point position) {
 		this.type = type;
-		this.position = position;
 	}
 
 	public UpgradeType getType() {
 		return type;
-	}
-
-	public Point getPosition() {
-		return position;
 	}
 
 	public Upgrade getUpgrade() {
@@ -50,10 +44,6 @@ public class Slot{
 			icon = ImageIO.read(new File(ulr.getPath()));
 		} catch (IOException e) {}
 		return icon;
-	}
-	
-	public void paintInGame(Graphics g){
-		
 	}
 
 }

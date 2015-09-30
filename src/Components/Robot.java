@@ -11,7 +11,9 @@ public class Robot extends Living{
 	private int energy;	
 	private int legForce;
 	private int armForce;
-	private Upgrade body;
+	private Body body;
+	private Head head;
+	private Limbs limbs;
 
 	public Robot(Point position, int baseSpeed, int baseForce, int healt,
 			int maxhealth, World currentWorld, String name, Color color, int energy) {
@@ -48,16 +50,28 @@ public class Robot extends Living{
 		this.energy = energy;
 	}
 
-	public Upgrade getBody() {
+	public Body getBody() {
 		return body;
 	}
 
-	public boolean setBody(Upgrade body) {
-		if(body.getType() != UpgradeType.body){
-			return false;
-		}
+	public void setBody(Body body) {
 		this.body = body;
-		return true;
+	}
+	
+	public Head getHead() {
+		return head;
+	}
+
+	public void setHead(Head head) {
+		this.head = head;
+	}
+	
+	public Limbs getLimbs() {
+		return limbs;
+	}
+
+	public void setLimbs(Limbs limbs) {
+		this.limbs = limbs;
 	}
 
 	public int getLegForce() {

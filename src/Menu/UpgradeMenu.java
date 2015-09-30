@@ -49,9 +49,9 @@ public class UpgradeMenu extends Menu implements MouseListener{
 	
 	private void reloadSlots(){
 		//@TODO: load all slots here
-		IconPanel slot = new SlotIconPanel(new Slot(UpgradeType.leg, new Point(10, 10)));
+		/*IconPanel slot = new SlotIconPanel(new Slot(UpgradeType.leg, new Point(10, 10)));
 		slot.addMouseListener(this);
-		slotPanel.add(slot);
+		slotPanel.add(slot);*/
 	}
 	
 	private void setUpgrade(Upgrade upgrade){

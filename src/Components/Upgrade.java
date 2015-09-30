@@ -53,9 +53,5 @@ public class Upgrade{
 		} catch (IOException e) {}
 		return icon;
 	}
-	
-	public void paintInGame(Graphics g){
-		
-	}
 
 }

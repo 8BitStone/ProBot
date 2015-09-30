@@ -11,9 +11,9 @@ public class UpgradeManager {
 
 	public UpgradeManager() {
 		this.allUpgrades = new Upgrade[]{
-			new Upgrade(UpgradeType.leg, "Leg Mk1", null),
+			/*new Upgrade(UpgradeType.leg, "Leg Mk1", null),
 			new Upgrade(UpgradeType.foot, "Foot Mk1", null),
-			new Upgrade(UpgradeType.leg, "Leg Mk2", null)
+			new Upgrade(UpgradeType.leg, "Leg Mk2", null)*/
 		};
 	}
 	
