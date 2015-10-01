@@ -24,6 +24,8 @@ public class Robot extends Living{
 		this.color = color;
 		this.energy = energy;
 		this.body = null;
+		this.head = null;
+		this.limbs = null;
 	}
 	
 	public String getName() {

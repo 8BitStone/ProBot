@@ -11,14 +11,12 @@ import java.util.ArrayList;
 import javax.swing.JPanel;
 import javax.swing.border.TitledBorder;
 
-import Components.Slot;
 import Components.Upgrade;
 import Components.UpgradeType;
 import Core.ProBotGame;
 
 public class UpgradeMenu extends Menu implements MouseListener{
 	
-	private SlotIconPanel selectedIconPanel = null;
 	private JPanel slotPanel;
 
 	public UpgradeMenu(ProBotGame game) {
@@ -55,19 +53,13 @@ public class UpgradeMenu extends Menu implements MouseListener{
 	}
 	
 	private void setUpgrade(Upgrade upgrade){
-		if(!this.selectedIconPanel.getSlot().setUpgrade(upgrade)){
-			return;
-		}
-		this.selectedIconPanel.setUpgrade(upgrade);
-		this.selectedIconPanel.repaint();
+		
 	}
 	
-	private void showMatchingUpgrades(SlotIconPanel slotIconPanel){
-		this.selectedIconPanel = slotIconPanel;
-		
+	private void showMatchingUpgrades(UpgradeType type){
 		this.menuPanel.removeAll();
 		
-		ArrayList<Upgrade> upgrades = this.game.getUpgradeManager().getUpgradesByType(slotIconPanel.getSlot().getType());
+		ArrayList<Upgrade> upgrades = this.game.getUpgradeManager().getUpgradesByType(type);
 		for(Upgrade u : upgrades){
 			UpgradeIconPanel uip = new UpgradeIconPanel(u);
 			uip.addMouseListener(this);
@@ -79,11 +71,7 @@ public class UpgradeMenu extends Menu implements MouseListener{
 
 	public void mouseClicked(MouseEvent e) {
 		Component c = e.getComponent();
-		if(c.getClass() == SlotIconPanel.class){
-			this.showMatchingUpgrades(((SlotIconPanel)c));
-		}else{
-			this.setUpgrade(((UpgradeIconPanel)c).getUpgrade());
-		}
+		//do something
 		this.game.requestFocus();
 	}
 
