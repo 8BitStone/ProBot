@@ -1,13 +1,23 @@
 package Components;
 
+import java.awt.Image;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+import java.net.URL;
+
+import javax.imageio.ImageIO;
+
 public abstract class BodyPart {
 	
 	private Upgrade[] upgrades;
 	private UpgradeType type;
+	private String name;
 	
-	public BodyPart(int upgradeCount, UpgradeType type){
+	public BodyPart(int upgradeCount, UpgradeType type, String name){
 		this.upgrades = new Upgrade[upgradeCount];
 		this.type = type;
+		this.name = name;
 	}
 
 	public Upgrade[] getUpgrades() {
@@ -33,5 +43,18 @@ public abstract class BodyPart {
 
 	public UpgradeType getType() {
 		return type;
+	}
+	
+	public String getName() {
+		return name;
+	}
+
+	public BufferedImage getIcon(){
+		BufferedImage icon = null;
+		try {
+			URL url = getClass().getResource("/Icons/"+this.name.replaceAll("\\s","").toLowerCase()+".png");
+			icon = ImageIO.read(new File(url.getPath()));
+		} catch (IOException e) {}
+		return icon;
 	}
 }

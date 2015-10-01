@@ -13,10 +13,6 @@ public class UpgradeIconPanel extends IconPanel {
 		this.upgrade = upgrade;
 	}
 	
-	public Upgrade getUpgrade(){
-		return this.upgrade;
-	}
-	
 	public void paint(Graphics g){
 		g.drawImage(this.upgrade.getIcon(), 0, 0, null);
 	}
