@@ -31,7 +31,7 @@ public class UpgradeManager {
 		return matching;
 	}
 	
-	public Upgrade getUpgradesByname(String name){
+	public Upgrade getUpgradeByname(String name){
 		for(Upgrade u : allUpgrades){
 			if(u.getName() == name){
 				return u;
