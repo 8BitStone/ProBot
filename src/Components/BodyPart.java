@@ -52,7 +52,8 @@ public abstract class BodyPart {
 	public BufferedImage getIcon(){
 		BufferedImage icon = null;
 		try {
-			URL url = getClass().getResource("/Icons/"+this.name.replaceAll("\\s","").toLowerCase()+".png");
+			//URL url = getClass().getResource("/Icons/"+this.name.replaceAll("\\s","").toLowerCase()+".png");
+			URL url = getClass().getResource("/Icons/empty.png");
 			icon = ImageIO.read(new File(url.getPath()));
 		} catch (IOException e) {}
 		return icon;

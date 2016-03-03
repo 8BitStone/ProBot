@@ -4,6 +4,8 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Point;
 
+import Core.ProBotGame;
+
 public class Player extends Robot {
 
 	public Player(Point position, int baseSpeed, int baseForce, int healt,
@@ -13,7 +15,7 @@ public class Player extends Robot {
 				name, color, energy);
 	}
 	
-	public void load(){
+	public void load(ProBotGame game){
 		this.setPosition
 		(
 				new Point
@@ -22,6 +24,9 @@ public class Player extends Robot {
 						(int)Math.floor(this.getCurrentWorld().getHeight()/2*POSITION_MULTIPLYER-60)
 				)
 		);
+		this.setHead(game.getUpgradeManager().getHeadByName("Head 1"));
+		this.setBody(game.getUpgradeManager().getBodyByName("Body 1"));
+		this.setLimbs(game.getUpgradeManager().getLimbsByName("Limbs 1"));
 	}
 	
 	@Override

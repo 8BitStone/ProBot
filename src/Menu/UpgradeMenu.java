@@ -11,36 +11,45 @@ import java.util.ArrayList;
 import javax.swing.JPanel;
 import javax.swing.border.TitledBorder;
 
+import Components.BodyPart;
 import Components.Upgrade;
 import Components.UpgradeType;
 import Core.ProBotGame;
 
 public class UpgradeMenu extends Menu implements MouseListener{
 	
-	private JPanel slotPanel;
+	private JPanel bodypartPanel;
+	private JPanel upgradePanel;
 
 	public UpgradeMenu(ProBotGame game) {
 		super(game);
-		slotPanel = new JPanel();
+		bodypartPanel = new JPanel();
+		upgradePanel = new JPanel();
 	}
 	
 	public void prepareSpecificMenu(){
-		Dimension panelSize = new Dimension(game.getWindowSize().width/2-20, game.getWindowSize().height-20);
+		Dimension panelSize = new Dimension(game.getWindowSize().width/3-20, game.getWindowSize().height-20);
 		this.menuWrapper.setLayout(null);
-		menuPanel.setLayout(new FlowLayout(FlowLayout.LEFT, 10, 10));
-		slotPanel.setLayout(new FlowLayout(FlowLayout.RIGHT, 5, 0));
+		menuPanel.setLayout(new FlowLayout(FlowLayout.LEFT, 0, 0));
+		bodypartPanel.setLayout(new FlowLayout(FlowLayout.LEFT, 0, 0));
+		upgradePanel.setLayout(new FlowLayout(FlowLayout.LEFT, 0, 0));
 		menuPanel.setSize(panelSize);
-		slotPanel.setSize(panelSize);
+		bodypartPanel.setSize(panelSize);
+		upgradePanel.setSize(panelSize);
 		
-		menuPanel.setLocation(panelSize.width+25, 10);
-		slotPanel.setLocation(15, 10);
+		menuPanel.setLocation(15, 10);
+		bodypartPanel.setLocation(panelSize.width+25, 10);
+		upgradePanel.setLocation(panelSize.width*2+35, 10);
 		
-		TitledBorder upgradeTB = new TitledBorder("Upgrades");
-		menuPanel.setBorder(upgradeTB);
-		TitledBorder slotTB = new TitledBorder("Slots");
-		slotPanel.setBorder(slotTB);
+		TitledBorder robotTB = new TitledBorder("Robot");
+		menuPanel.setBorder(robotTB);
+		TitledBorder bodypartsTB = new TitledBorder("Bodyparts");
+		bodypartPanel.setBorder(bodypartsTB);
+		TitledBorder upgradesTB = new TitledBorder("Upgrades");
+		upgradePanel.setBorder(upgradesTB);
 		
-		menuWrapper.add(slotPanel);
+		menuWrapper.add(bodypartPanel);
+		menuWrapper.add(upgradePanel);
 		
 		this.reloadSlots();	
 	}
@@ -50,6 +59,15 @@ public class UpgradeMenu extends Menu implements MouseListener{
 		/*IconPanel slot = new SlotIconPanel(new Slot(UpgradeType.leg, new Point(10, 10)));
 		slot.addMouseListener(this);
 		slotPanel.add(slot);*/
+		IconPanel headPanel = new BodypartIconPanel(this.game.getPlayer().getHead());
+		headPanel.addMouseListener(this);
+		menuPanel.add(headPanel);
+		IconPanel bodyPanel = new BodypartIconPanel(this.game.getPlayer().getBody());
+		bodyPanel.addMouseListener(this);
+		menuPanel.add(bodyPanel);
+		IconPanel limbsPanel = new BodypartIconPanel(this.game.getPlayer().getLimbs());
+		limbsPanel.addMouseListener(this);
+		menuPanel.add(limbsPanel);
 	}
 	
 	private void setUpgrade(Upgrade upgrade){

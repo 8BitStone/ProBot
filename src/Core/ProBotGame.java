@@ -95,7 +95,7 @@ public class ProBotGame extends JFrame implements KeyListener{
 		System.out.println("loading world");
 		this.player.getCurrentWorld().load();
 		System.out.println("loading player");
-		this.player.load();
+		this.player.load(this);
 		System.out.println("running");
 	}
 	
