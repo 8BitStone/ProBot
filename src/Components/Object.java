@@ -23,7 +23,7 @@ public abstract class Object {
 	private World currentWorld;
 	private float ySpeed; // percentage of max speed
 	private float xSpeed; //percent of max speed
-	protected int width = 2; // in Blocks
+	protected int width = 1; // in Blocks
 	protected int height = 2; // in Blocks
 	private boolean isFloating;
 	private boolean isMovingUp = false;
@@ -169,7 +169,7 @@ public abstract class Object {
 				blocks = this.getCurrentWorld().getBlocks(
 						position.x, 
 						position.y-((int)Math.ceil(distance*POSITION_MULTIPLYER)), 
-						position.x, 
+						position.x+this.width*POSITION_MULTIPLYER-1, 
 						position.y
 						);
 				break;
