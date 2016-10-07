@@ -51,45 +51,78 @@ public class UpgradeMenu extends Menu implements MouseListener{
 		menuWrapper.add(bodypartPanel);
 		menuWrapper.add(upgradePanel);
 		
-		this.reloadSlots();	
+		this.reloadBodySummary();	
 	}
 	
-	private void reloadSlots(){
+	private void reloadBodySummary(){
 		//@TODO: load all slots here
 		/*IconPanel slot = new SlotIconPanel(new Slot(UpgradeType.leg, new Point(10, 10)));
 		slot.addMouseListener(this);
 		slotPanel.add(slot);*/
-		IconPanel headPanel = new BodypartIconPanel(this.game.getPlayer().getHead());
+		menuPanel.removeAll();
+		IconPanel headPanel = new BodypartSummaryPanel(this.game.getPlayer().getHead());
 		headPanel.addMouseListener(this);
 		menuPanel.add(headPanel);
-		IconPanel bodyPanel = new BodypartIconPanel(this.game.getPlayer().getBody());
+		IconPanel bodyPanel = new BodypartSummaryPanel(this.game.getPlayer().getBody());
 		bodyPanel.addMouseListener(this);
 		menuPanel.add(bodyPanel);
-		IconPanel limbsPanel = new BodypartIconPanel(this.game.getPlayer().getLimbs());
+		IconPanel limbsPanel = new BodypartSummaryPanel(this.game.getPlayer().getLimbs());
 		limbsPanel.addMouseListener(this);
 		menuPanel.add(limbsPanel);
+		
+		menuPanel.paintAll(menuPanel.getGraphics());
 	}
 	
-	private void setUpgrade(Upgrade upgrade){
+	private void setUpgrade(Upgrade upgrade, BodyPart bodyPart){
+		
+	}
+	
+	private void setBodyPart(BodyPart bodypart){
 		
 	}
 	
 	private void showMatchingUpgrades(UpgradeType type){
-		this.menuPanel.removeAll();
+		this.upgradePanel.removeAll();
 		
 		ArrayList<Upgrade> upgrades = this.game.getUpgradeManager().getUpgradesByType(type);
 		for(Upgrade u : upgrades){
 			UpgradeIconPanel uip = new UpgradeIconPanel(u);
 			uip.addMouseListener(this);
-			menuPanel.add(uip);
+			upgradePanel.add(uip);
 		}
 		
-		this.menuWrapper.paintAll(menuWrapper.getGraphics());
+		this.upgradePanel.paintAll(upgradePanel.getGraphics());
+	}
+	
+	private void showMatchingBodyparts(UpgradeType type){
+		this.bodypartPanel.removeAll();
+		
+		ArrayList<BodyPart> bodyparts = this.game.getUpgradeManager().getBodypartsByType(type);
+		for(BodyPart b : bodyparts){
+			BodypartIconPanel bpip = new BodypartIconPanel(b);
+			bpip.addMouseListener(this);
+			bodypartPanel.add(bpip);
+		}
+		
+		this.bodypartPanel.paintAll(bodypartPanel.getGraphics());
 	}
 
 	public void mouseClicked(MouseEvent e) {
 		Component c = e.getComponent();
-		//do something
+		switch(c.getClass().getName()){
+		case "Menu.BodypartSummaryPanel":
+			showMatchingBodyparts(((BodypartSummaryPanel)c).getBodypart().getType());
+			this.upgradePanel.removeAll();
+			break;
+		case "Menu.BodypartIconPanel":
+			showMatchingUpgrades(((BodypartIconPanel)c).getBodypart().getType());
+			//@ToDo: set Bodypart
+			break;
+		case "Menu.UpgradeIconPanel":
+			//@ToDo: set upgrade
+			break;
+		}
+		this.reloadBodySummary();
 		this.game.requestFocus();
 	}
 

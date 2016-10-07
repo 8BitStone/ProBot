@@ -5,11 +5,11 @@ import java.awt.Graphics;
 import Components.BodyPart;
 import Components.Upgrade;
 
-public class BodypartIconPanel extends IconPanel {
+public class BodypartSummaryPanel extends IconPanel {
 	
 	private BodyPart bodypart;
 
-	public BodypartIconPanel(BodyPart bodypart) {
+	public BodypartSummaryPanel(BodyPart bodypart) {
 		super();
 		this.bodypart = bodypart;
 	}

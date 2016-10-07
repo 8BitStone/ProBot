@@ -70,16 +70,26 @@ public class UpgradeManager {
 		return bodyparts;
 	}
 
-	public BodyPart[] getBodypartsByType(UpgradeType type){
+	public ArrayList<BodyPart> getBodypartsByType(UpgradeType type){
+		ArrayList<BodyPart> bodyparts = new ArrayList<BodyPart>();
 		switch (type) {
 		case Head:
-			return this.allHeads;
+			for(BodyPart u : allHeads){
+				bodyparts.add(u);
+			}
+			return bodyparts;
 		case Body:
-			return this.allBodys;
+			for(BodyPart u : allBodys){
+				bodyparts.add(u);
+			}
+			return bodyparts;
 		case Limbs:
-			return this.allLimbs;
+			for(BodyPart u : allLimbs){
+				bodyparts.add(u);
+			}
+			return bodyparts;
 		}
-		return new BodyPart[0];
+		return new ArrayList<BodyPart>();
 	}
 	
 	public Head getHeadByName(String name){
