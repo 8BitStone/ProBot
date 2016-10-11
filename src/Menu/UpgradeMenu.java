@@ -3,6 +3,7 @@ package Menu;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.GridLayout;
 import java.awt.Point;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
@@ -37,7 +38,7 @@ public class UpgradeMenu extends Menu implements MouseListener{
 	public void prepareSpecificMenu(){
 		Dimension panelSize = new Dimension(game.getWindowSize().width/3-20, game.getWindowSize().height-20);
 		this.menuWrapper.setLayout(null);
-		menuPanel.setLayout(new FlowLayout(FlowLayout.LEFT, 0, 0));
+		menuPanel.setLayout(new GridLayout(3, 1));
 		bodypartPanel.setLayout(new FlowLayout(FlowLayout.LEFT, 0, 0));
 		upgradePanel.setLayout(new FlowLayout(FlowLayout.LEFT, 0, 0));
 		menuPanel.setSize(panelSize);
@@ -82,6 +83,7 @@ public class UpgradeMenu extends Menu implements MouseListener{
 	
 	private void setUpgrade(Upgrade upgrade, BodyPart bodyPart){
 		bodyPart.addUpgrade(upgrade);
+		upgrade.setUsed(true);
 	}
 	
 	private void setBodyPart(BodyPart bodypart, Robot robot){
@@ -96,6 +98,7 @@ public class UpgradeMenu extends Menu implements MouseListener{
 			robot.setLimbs((Limbs) bodypart);
 			break;
 		}
+		bodypart.setUsed(true);
 	}
 	
 	private void showMatchingUpgrades(UpgradeType type){
@@ -139,7 +142,6 @@ public class UpgradeMenu extends Menu implements MouseListener{
 			break;
 		case "Menu.UpgradeIconPanel":
 			this.setUpgrade(((UpgradeIconPanel)c).getUpgrade(), this.activeBodypartIconPanel.getBodypart());
-			//@ToDo: set upgrade
 			break;
 		}
 		this.reloadBodySummary();

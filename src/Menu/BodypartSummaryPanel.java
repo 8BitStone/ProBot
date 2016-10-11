@@ -17,9 +17,14 @@ public class BodypartSummaryPanel extends IconPanel {
 	}
 	
 	public void paint(Graphics g){
-		g.drawImage(this.bodypart.getIcon(), 0, 0, null);
+		//g.drawImage(this.bodypart.getIcon(), 0, 0, null);
 		g.drawString(this.bodypart.getName(), 8, 18);
-		g.drawString(this.bodypart.getUpgrades()[0].getName(), 8, 36);
+		g.setColor(Color.ORANGE);
+		Upgrade[] upgrades = this.bodypart.getUpgrades();
+		for(int i = 0; i < upgrades.length; i++){
+			if(upgrades[i] == null) continue;
+			g.drawString(upgrades[i].getName(), 8, (i+2)*18);
+		}
 	}
 	
 	public BodyPart getBodypart(){

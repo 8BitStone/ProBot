@@ -1,5 +1,6 @@
 package Menu;
 
+import java.awt.Color;
 import java.awt.Graphics;
 
 import Components.BodyPart;
@@ -16,6 +17,11 @@ public class BodypartIconPanel extends IconPanel {
 	
 	public void paint(Graphics g){
 		g.drawImage(this.bodypart.getIcon(), 0, 0, null);
+		if(bodypart.isUsed()){
+			g.setColor(Color.red);
+		}else{
+			g.setColor(Color.black);
+		}
 		g.drawString(this.bodypart.getName(), 8, 18);
 	}
 	

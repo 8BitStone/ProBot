@@ -1,5 +1,6 @@
 package Components;
 
+import java.awt.Color;
 import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -8,17 +9,29 @@ import java.net.URL;
 
 import javax.imageio.ImageIO;
 
-public abstract class BodyPart {
+public abstract class BodyPart{
 	
 	private Upgrade[] upgrades;
 	private UpgradeType type;
 	private String name;
+	private Boolean used = false;
 	
 	public BodyPart(int upgradeCount, UpgradeType type, String name){
 		this.upgrades = new Upgrade[upgradeCount];
 		this.type = type;
 		this.name = name;
 	}
+	
+
+	public Boolean isUsed() {
+		return used;
+	}
+
+
+	public void setUsed(Boolean used) {
+		this.used = used;
+	}
+
 
 	public Upgrade[] getUpgrades() {
 		return upgrades;

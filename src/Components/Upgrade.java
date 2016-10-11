@@ -13,12 +13,23 @@ public class Upgrade{
 	private UpgradeType type;
 	private String name;
 	private Ability additionalAbility;
+	private Boolean used = false;
 	
 	public Upgrade(UpgradeType type, String name, Ability additionalAbility) {
 		this.type = type;
 		this.name = name;
 		this.additionalAbility = additionalAbility;
 	}
+
+	public Boolean isUsed() {
+		return used;
+	}
+
+
+	public void setUsed(Boolean used) {
+		this.used = used;
+	}
+
 
 	public UpgradeType getType() {
 		return type;
