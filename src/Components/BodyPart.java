@@ -33,12 +33,23 @@ public abstract class BodyPart {
 		}
 	}
 	
-	public boolean addUpgrade(Upgrade upgrade, int position){
+	public boolean addUpgrade(Upgrade upgrade){
 		if(upgrade.getType() == this.type){
+			int position = this.nextFreePositon();
+			if(position == -1) return false;
 			this.upgrades[position] = upgrade;
 			return true;
 		}
 		return false;
+	}
+	
+	private int nextFreePositon(){
+		for(int i = 0; i < this.upgrades.length; i++){
+			if(this.upgrades[i] == null){
+				return i;
+			}
+		}
+		return -1;
 	}
 
 	public UpgradeType getType() {

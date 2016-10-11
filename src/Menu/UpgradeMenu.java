@@ -11,7 +11,11 @@ import java.util.ArrayList;
 import javax.swing.JPanel;
 import javax.swing.border.TitledBorder;
 
+import Components.Body;
 import Components.BodyPart;
+import Components.Head;
+import Components.Limbs;
+import Components.Robot;
 import Components.Upgrade;
 import Components.UpgradeType;
 import Core.ProBotGame;
@@ -20,6 +24,9 @@ public class UpgradeMenu extends Menu implements MouseListener{
 	
 	private JPanel bodypartPanel;
 	private JPanel upgradePanel;
+	
+	private BodypartIconPanel activeBodypartIconPanel = null;
+	private BodypartSummaryPanel activeBodypartSummaryPanel = null;
 
 	public UpgradeMenu(ProBotGame game) {
 		super(game);
@@ -74,11 +81,21 @@ public class UpgradeMenu extends Menu implements MouseListener{
 	}
 	
 	private void setUpgrade(Upgrade upgrade, BodyPart bodyPart){
-		
+		bodyPart.addUpgrade(upgrade);
 	}
 	
-	private void setBodyPart(BodyPart bodypart){
-		
+	private void setBodyPart(BodyPart bodypart, Robot robot){
+		switch (this.activeBodypartSummaryPanel.getBodypart().getType()){
+		case Head:
+			robot.setHead((Head) bodypart);
+			break;
+		case Body:
+			robot.setBody((Body) bodypart);
+			break;
+		case Limbs:
+			robot.setLimbs((Limbs) bodypart);
+			break;
+		}
 	}
 	
 	private void showMatchingUpgrades(UpgradeType type){
@@ -113,12 +130,15 @@ public class UpgradeMenu extends Menu implements MouseListener{
 		case "Menu.BodypartSummaryPanel":
 			showMatchingBodyparts(((BodypartSummaryPanel)c).getBodypart().getType());
 			this.upgradePanel.removeAll();
+			this.activeBodypartSummaryPanel = (BodypartSummaryPanel)c;
 			break;
 		case "Menu.BodypartIconPanel":
 			showMatchingUpgrades(((BodypartIconPanel)c).getBodypart().getType());
-			//@ToDo: set Bodypart
+			this.activeBodypartIconPanel = (BodypartIconPanel)c;
+			this.setBodyPart(((BodypartIconPanel)c).getBodypart(), this.game.getPlayer());
 			break;
 		case "Menu.UpgradeIconPanel":
+			this.setUpgrade(((UpgradeIconPanel)c).getUpgrade(), this.activeBodypartIconPanel.getBodypart());
 			//@ToDo: set upgrade
 			break;
 		}

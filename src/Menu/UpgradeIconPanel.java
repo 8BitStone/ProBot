@@ -15,6 +15,7 @@ public class UpgradeIconPanel extends IconPanel {
 	
 	public void paint(Graphics g){
 		g.drawImage(this.upgrade.getIcon(), 0, 0, null);
+		g.drawString(this.upgrade.getName(), 8, 18);
 	}
 	
 	public Upgrade getUpgrade(){
