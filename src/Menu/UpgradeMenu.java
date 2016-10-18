@@ -111,7 +111,6 @@ public class UpgradeMenu extends Menu implements MouseListener{
 			robot.setLimbs((Limbs) bodypart);
 			break;
 		}
-		this.showMatchingBodyparts(this.activeBodypartSummaryPanel.getBodypart().getType());
 	}
 	
 	private void showMatchingUpgrades(UpgradeType type){
@@ -155,10 +154,13 @@ public class UpgradeMenu extends Menu implements MouseListener{
 			showMatchingUpgrades(((BodypartIconPanel)c).getBodypart().getType());
 			if((BodypartIconPanel)c != this.activeBodypartIconPanel){
 				this.removeAllUpgrades(this.activeBodypartIconPanel.getBodypart());
-				this.activeBodypartIconPanel = (BodypartIconPanel)c;
 				this.setBodyPart(((BodypartIconPanel)c).getBodypart(), this.game.getPlayer());
+				this.activeBodypartIconPanel.repaint();
+				c.repaint();
 			}
 			this.activeBodypartIconPanel = (BodypartIconPanel)c;
+			this.activeBodypartSummaryPanel.setBodypart(((BodypartIconPanel)c).getBodypart());
+			this.activeBodypartSummaryPanel.repaint();
 			break;
 		case "Menu.UpgradeIconPanel":
 			Upgrade u = ((UpgradeIconPanel)c).getUpgrade();
@@ -167,9 +169,9 @@ public class UpgradeMenu extends Menu implements MouseListener{
 			}else{
 				this.setUpgrade(u, this.activeBodypartIconPanel.getBodypart());
 			}
+			this.activeBodypartSummaryPanel.repaint();
 			break;
 		}
-		this.reloadBodySummary();
 		this.game.requestFocus();
 	}
 

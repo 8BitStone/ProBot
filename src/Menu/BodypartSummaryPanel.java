@@ -30,5 +30,9 @@ public class BodypartSummaryPanel extends IconPanel {
 	public BodyPart getBodypart(){
 		return bodypart;
 	}
+	
+	public void setBodypart(BodyPart b){
+		this.bodypart = b;
+	}
 
 }
