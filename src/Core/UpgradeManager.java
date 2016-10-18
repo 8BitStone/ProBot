@@ -25,6 +25,7 @@ public class UpgradeManager {
 		this.allHeads = new Head[]{
 			new Head(1, "Head 1"),
 			new Head(1, "Head 2")
+			
 		};
 		this.allBodys = new Body[]{
 				new Body(1, "Body 1"),

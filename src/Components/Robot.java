@@ -57,7 +57,11 @@ public class Robot extends Living{
 	}
 
 	public void setBody(Body body) {
+		if(this.body != null){
+			this.body.setUsed(false);
+		}
 		this.body = body;
+		this.body.setUsed(true);
 	}
 	
 	public Head getHead() {
@@ -65,7 +69,11 @@ public class Robot extends Living{
 	}
 
 	public void setHead(Head head) {
+		if(this.head != null){
+			this.head.setUsed(false);
+		}
 		this.head = head;
+		this.head.setUsed(true);
 	}
 	
 	public Limbs getLimbs() {
@@ -73,7 +81,11 @@ public class Robot extends Living{
 	}
 
 	public void setLimbs(Limbs limbs) {
+		if(this.limbs != null){
+			this.limbs.setUsed(false);
+		}
 		this.limbs = limbs;
+		this.limbs.setUsed(true);
 	}
 
 	public int getLegForce() {

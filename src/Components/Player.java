@@ -24,7 +24,7 @@ public class Player extends Robot {
 						(int)Math.floor(this.getCurrentWorld().getHeight()/2*POSITION_MULTIPLYER-60)
 				)
 		);
-		this.setHead(game.getUpgradeManager().getHeadByName("Head 1"));
+		this.setHead(game.getUpgradeManager().getHeadByName("Head 2"));
 		this.setBody(game.getUpgradeManager().getBodyByName("Body 1"));
 		this.setLimbs(game.getUpgradeManager().getLimbsByName("Limbs 1"));
 	}

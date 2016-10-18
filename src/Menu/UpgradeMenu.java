@@ -86,6 +86,19 @@ public class UpgradeMenu extends Menu implements MouseListener{
 		upgrade.setUsed(true);
 	}
 	
+	private void removeUpgrade(Upgrade upgrade, BodyPart bodyPart){
+		bodyPart.removeUpgrade(upgrade);
+		upgrade.setUsed(false);
+	}
+	
+	private void removeAllUpgrades(BodyPart bodyPart){
+		for(Upgrade u : bodyPart.getUpgrades()){
+			if(u != null){
+				this.removeUpgrade(u, bodyPart);
+			}
+		}
+	}
+	
 	private void setBodyPart(BodyPart bodypart, Robot robot){
 		switch (this.activeBodypartSummaryPanel.getBodypart().getType()){
 		case Head:
@@ -98,7 +111,7 @@ public class UpgradeMenu extends Menu implements MouseListener{
 			robot.setLimbs((Limbs) bodypart);
 			break;
 		}
-		bodypart.setUsed(true);
+		this.showMatchingBodyparts(this.activeBodypartSummaryPanel.getBodypart().getType());
 	}
 	
 	private void showMatchingUpgrades(UpgradeType type){
@@ -111,7 +124,7 @@ public class UpgradeMenu extends Menu implements MouseListener{
 			upgradePanel.add(uip);
 		}
 		
-		this.upgradePanel.paintAll(upgradePanel.getGraphics());
+		this.upgradePanel.paintAll(this.upgradePanel.getGraphics());
 	}
 	
 	private void showMatchingBodyparts(UpgradeType type){
@@ -121,6 +134,9 @@ public class UpgradeMenu extends Menu implements MouseListener{
 		for(BodyPart b : bodyparts){
 			BodypartIconPanel bpip = new BodypartIconPanel(b);
 			bpip.addMouseListener(this);
+			if(b.isUsed()){
+				this.activeBodypartIconPanel = bpip;
+			}
 			bodypartPanel.add(bpip);
 		}
 		
@@ -137,11 +153,20 @@ public class UpgradeMenu extends Menu implements MouseListener{
 			break;
 		case "Menu.BodypartIconPanel":
 			showMatchingUpgrades(((BodypartIconPanel)c).getBodypart().getType());
+			if((BodypartIconPanel)c != this.activeBodypartIconPanel){
+				this.removeAllUpgrades(this.activeBodypartIconPanel.getBodypart());
+				this.activeBodypartIconPanel = (BodypartIconPanel)c;
+				this.setBodyPart(((BodypartIconPanel)c).getBodypart(), this.game.getPlayer());
+			}
 			this.activeBodypartIconPanel = (BodypartIconPanel)c;
-			this.setBodyPart(((BodypartIconPanel)c).getBodypart(), this.game.getPlayer());
 			break;
 		case "Menu.UpgradeIconPanel":
-			this.setUpgrade(((UpgradeIconPanel)c).getUpgrade(), this.activeBodypartIconPanel.getBodypart());
+			Upgrade u = ((UpgradeIconPanel)c).getUpgrade();
+			if(u.isUsed()){
+				this.removeUpgrade(u, this.activeBodypartIconPanel.getBodypart());
+			}else{
+				this.setUpgrade(u, this.activeBodypartIconPanel.getBodypart());
+			}
 			break;
 		}
 		this.reloadBodySummary();
