@@ -59,14 +59,6 @@ public class UpgradeMenu extends Menu implements MouseListener{
 		menuWrapper.add(bodypartPanel);
 		menuWrapper.add(upgradePanel);
 		
-		this.reloadBodySummary();	
-	}
-	
-	private void reloadBodySummary(){
-		//@TODO: load all slots here
-		/*IconPanel slot = new SlotIconPanel(new Slot(UpgradeType.leg, new Point(10, 10)));
-		slot.addMouseListener(this);
-		slotPanel.add(slot);*/
 		menuPanel.removeAll();
 		IconPanel headPanel = new BodypartSummaryPanel(this.game.getPlayer().getHead());
 		headPanel.addMouseListener(this);
@@ -135,6 +127,7 @@ public class UpgradeMenu extends Menu implements MouseListener{
 			bpip.addMouseListener(this);
 			if(b.isUsed()){
 				this.activeBodypartIconPanel = bpip;
+				showMatchingUpgrades(b.getType());
 			}
 			bodypartPanel.add(bpip);
 		}
@@ -146,8 +139,8 @@ public class UpgradeMenu extends Menu implements MouseListener{
 		Component c = e.getComponent();
 		switch(c.getClass().getName()){
 		case "Menu.BodypartSummaryPanel":
-			showMatchingBodyparts(((BodypartSummaryPanel)c).getBodypart().getType());
 			this.upgradePanel.removeAll();
+			showMatchingBodyparts(((BodypartSummaryPanel)c).getBodypart().getType());
 			this.activeBodypartSummaryPanel = (BodypartSummaryPanel)c;
 			break;
 		case "Menu.BodypartIconPanel":
@@ -169,6 +162,7 @@ public class UpgradeMenu extends Menu implements MouseListener{
 			}else{
 				this.setUpgrade(u, this.activeBodypartIconPanel.getBodypart());
 			}
+			((UpgradeIconPanel)c).repaint();
 			this.activeBodypartSummaryPanel.repaint();
 			break;
 		}
